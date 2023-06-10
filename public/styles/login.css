@@ -1,0 +1,31 @@
+body{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #85FFBD;
+background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%);
+font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.loginContainer{
+height: 30vh;  
+width: 30vw;
+border: 3px solid rgba(0, 0,0 , 0.368);  
+box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+background-color: #8BC6EC;
+background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+color:white;
+border-radius: 12px;
+animation: slideUp 1.5s ease-in-out ;
+}
+@keyframes slideUp {
+    from{
+        position: relative;
+        bottom:-400px;
+    }
+    to{
+        position: relative;
+        bottom:0px;
+    }
+    
+}
