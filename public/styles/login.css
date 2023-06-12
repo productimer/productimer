@@ -33,3 +33,23 @@ animation: slideUp 1.6s ease-out  ;
     }
     
 }
+
+form{
+    display: flex;
+    flex-direction: column;
+    /* height: 20px; */
+    margin-top: 40px;
+    margin-right: 20px;
+    align-items: flex-end;
+    justify-content: space-between;
+    /* width: 50%; */
+    /* flex-direction: column; */
+}
+
+.element{
+    height: 40px;
+    width: 300px;
+    /* padding: 20px;
+     */
+     margin: 20px;
+}
