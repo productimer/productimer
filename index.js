@@ -2,8 +2,11 @@ import express, { urlencoded } from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
 import mongoose from "mongoose";
-
+import { request } from "express";
+import fetch from 'node-fetch';
+import bcrypt from "bcrypt"
 const app  = express();
 app.use(express.static(path.join(path.resolve(), "public/styles")));
 
@@ -87,18 +90,141 @@ app.get("/createTestUser",async(req,res)=>{
 })
 
 
+const getRandomQuote=()=>{
+    const category = 'success';
+const apiKey = 'YOUR_API_KEY';
 
+let quote;
 
-
-app.get("/",(req,res)=>{
-    res.render("login.ejs")
+return fetch(`https://api.api-ninjas.com/v1/quotes?category=${category}`, {
+  headers: {
+    'X-Api-Key': `8b6tIjLn1WZlmnISIEtdTw==Lemy59JlWuihfAjp`,
+  },
 })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} ${response.statusText}`);
+    }
+    return response.text();
+  })
+  .then(body => {
+   return( body);
+  })
+  .catch(error => {
+    console.error('Request failed:', error);
+  });
+
+ 
+}
+
+
+app.get("/",async(req,res)=>{
+    if(!req.cookies.token){
+        const quotePromise = getRandomQuote();
+    
+     const quoteValue = await quotePromise;
+   const  quoteObj = JSON.parse(quoteValue)
+        res.render("login.ejs",{message:quoteObj[0].quote})
+    }
+    else{
+        res.redirect('/home');
+    }
+})
+
+app.get("/register",async(req,res)=>{
+    const quotePromise = getRandomQuote();
+    
+    const quoteValue = await quotePromise;
+  const  quoteObj = JSON.parse(quoteValue)
+   res.render("register.ejs",{message:quoteObj[0].quote});
+})
+
+
+app.get("/login",async(req,res)=>{
+    const quotePromise = getRandomQuote();
+    
+     const quoteValue = await quotePromise;
+   const  quoteObj = JSON.parse(quoteValue)
+    res.render("login.ejs",{message:quoteObj[0].quote});
+})
+
 
 app.get("/home",(req,res)=>{
+    if(req.cookies.token){
     res.render("home.ejs")
+return;}
+res.render("login.ejs",{message:"please login first!"});
+})
+
+app.post('/register',async(req,res)=>{
+    console.log(req.body);
+    const {email} = req.body
+    const checkPreExistence = await Users.findOne({email:email});
+   if(checkPreExistence){
+    res.render("login.ejs",{message:"Account already exists!!! \nPlease Login Here"})
+    return;
+   }
+
+   const encryptedPassword = await bcrypt.hash(req.body.password,10);
+   console.log(encryptedPassword);
+
+   await Users.create({
+    email:req.body.email,
+    password:encryptedPassword,
+   })
+
+
+//    creating cookie with encrypted object id
+   const currUser = await Users.findOne({email:req.body.email})
+   console.log("currUser:",currUser)
+   const token = jwt.sign({id:currUser.id},'password')
+        // console.log("jwt token is:",token);
+        res.cookie("token", token, {
+            httpOnly: true,
+            expires: new Date(Date.now() + 30000000)
+
+        })
+//    res.cookie('user',)
+   res.render("home.ejs")
+
+
+
+
+
 })
 
 
+
+
+app.post("/login",async(req,res)=>{
+    // console.log(req.body);
+    const {email,password} = req.body;
+    const currUser = await Users.findOne({email:email});
+    console.log("currUser",currUser);
+
+    if(!currUser){
+        res.render("register.ejs",{message:'account does not exist, please register here'})
+        return;
+    }
+    //if entered password is correct then create a cookie for the user and take him to 
+    //home page
+
+   
+    if (await bcrypt.compare(password, currUser.password)) {
+       console.log("password is correct")
+        const token = jwt.sign({id:currUser.id},'password')
+        console.log("jwt token is:",token);
+        res.cookie("token", token, {
+            httpOnly: false,
+            expires: new Date(Date.now() + 30000000)
+// 
+        })
+        res.render("home.ejs");
+        return;
+    }
+    res.render("login.ejs",{message:"invalid password or email"})
+
+})
 
 connectDB().then(()=>{
     app.listen(4400,()=>{
