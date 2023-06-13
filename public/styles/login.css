@@ -60,6 +60,9 @@ form{
     width: 280px;
     margin: 20px;
     border: 3px solid rgba(255, 204, 0, 0.45);
+    color:turquoise;
+    text-align: center;
+    font-size: large;
     background-color: #2f5e4e;
     border-radius: 12px;
 }
