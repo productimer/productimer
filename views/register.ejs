@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,29 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productimer</title>
     <link rel="stylesheet" href="css/js-snackbar.css">
-    
-    <link rel="stylesheet" href="login.css">
+    <script src="js/js-snackbar.js"></script>
+    <link rel="stylesheet" href="register.css">
 </head>
 <body>
 
-    <div class="loginContainer">
+    <div class="registerContainer">
         <div class="right">
-            <form action="/login" method="post">
+            <form action="/register" method="post">
                 <input class= "element" type="email" placeholder="Enter Email" name="email">
                 <input class= "element" type="password" placeholder="Enter Password" name="password">
-                <button class= "element" type="submit"><h3>Login</h3></button>
+                <button class= "element" type="submit"><h3>Register</h3></button>
             </form>
-            <a href="/register">Don't have an account?</a>
+            <a href="/login">Already have an account?</a>
         </div>
     </div>
     
     
-
-<script src="https://cdn.skypack.dev/wc-toast">
-
-toast('This is a notification!');
-</script>
-
-
 </body>
 </html>

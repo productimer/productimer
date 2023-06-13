@@ -3,6 +3,7 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv'
 import mongoose from "mongoose";
+import Snackbar from "node-snackbar";
 
 const app  = express();
 app.use(express.static(path.join(path.resolve(), "public/styles")));
@@ -91,14 +92,42 @@ app.get("/createTestUser",async(req,res)=>{
 
 
 app.get("/",(req,res)=>{
-    res.render("login.ejs")
+    if(!req.cookies.token){
+        res.render("login.ejs")
+    }
+    else{
+        res.redirect('/home');
+    }
 })
+
+app.get("/register",(req,res)=>{
+    res.render("register.ejs");
+})
+app.get("/login",(req,res)=>{
+    res.render("login.ejs");
+})
+
 
 app.get("/home",(req,res)=>{
     res.render("home.ejs")
 })
 
+app.post('/register',async(req,res)=>{
+    console.log(req.body);
+    const {email} = req.body
+    const checkPreExistence = await Users.findOne({email:email});
+   
 
+
+
+})
+
+
+
+
+app.post("/login",(req,res)=>{
+    console.log(req.body);
+})
 
 connectDB().then(()=>{
     app.listen(4400,()=>{
