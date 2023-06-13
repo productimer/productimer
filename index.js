@@ -57,37 +57,37 @@ const conn =      await mongoose.connect(process.env.MONGO_URI, {
 
 
 //just to test if DB works
-app.get("/createTestUser",async(req,res)=>{
+// app.get("/createTestUser",async(req,res)=>{
 
-    const appuExists = await Users.findOne({email:"appu@gmail.com"});
-    //this will return null if document with email appu@gmail.com does not exist
+//     const appuExists = await Users.findOne({email:"appu@gmail.com"});
+//     //this will return null if document with email appu@gmail.com does not exist
 
-    //if the doc exists it will return the entire document
+//     //if the doc exists it will return the entire document
 
-    console.log(appuExists)
+//     console.log(appuExists)
     
-      if(appuExists===null){
-        Users.create({
-            name:"appu",
-            email:"appu@gmail.com",
-            password:"appu"
-        }).then(()=>{
+//       if(appuExists===null){
+//         Users.create({
+//             name:"appu",
+//             email:"appu@gmail.com",
+//             password:"appu"
+//         }).then(()=>{
             
-            res.send("user created!");
-        }).catch((err)=>{
-            console.log(err);
-        })
-        return;
-      }else{
-        const a = Math.floor(Math.random()*10);
-        res.send(`appu exists ${a}`);
+//             res.send("user created!");
+//         }).catch((err)=>{
+//             console.log(err);
+//         })
+//         return;
+//       }else{
+//         const a = Math.floor(Math.random()*10);
+//         res.send(`appu exists ${a}`);
 
-      }
+//       }
      
 
     
    
-})
+// })
 
 
 const getRandomQuote=()=>{
