@@ -1,6 +1,7 @@
 *{
     margin:0;
     padding: 0;;
+    overflow-y: hidden;
 }
 
 body{
@@ -65,4 +66,45 @@ form{
 
 h3{
     color: turquoise;
+}
+#snackbar{
+    width:0;
+    height: 0;
+    animation:showMessage 20s;
+    animation-delay: 1s;
+    background-color: #ffeda4;
+    color:black;
+    margin:auto;
+    position: absolute;
+    bottom:-20px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    text-align: center;
+
+}
+
+@keyframes showMessage {
+    0%{
+        width:50vw;
+        height: 10vh;;
+        position:absolute;
+        bottom:-200px;
+        opacity:0;
+    }
+    10%{
+        width:50vw;
+        height: 10vh;;
+        position:absolute;
+        bottom:30px;
+        opacity:1;
+    }
+    80%{
+        width:50vw;
+        height: 10vh;;
+        position:absolute;
+        bottom:-250px;
+        opacity:0;
+    }
 }
