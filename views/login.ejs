@@ -1,18 +1,48 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productimer</title>
+
     <link rel="stylesheet" href="login.css">
 </head>
 <body>
 
     <div class="loginContainer">
 
+        <div class="right">
+            <form action="/login" method="post">
+                <input class= "element" type="email" placeholder="Enter Email" name="email" required>
+                <input class= "element" type="password" placeholder="Enter Password" name="password" required>
+                <button class= "element" type="submit"><h3>Login</h3></button>
+            </form>
+            <a href="/register">Don't have an account?</a>
+        </div>
+    </div>
+    
+
+
     </div>
 
+
     
+    <!-- this snackbar will glide up whenever there is error
+    or success -->
+<div id="snackbar">
+
+<%= message  %>
+</div>
+
+
+<script>
+  
+
+
+</script>
+
+
 </body>
 </html>
