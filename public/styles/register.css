@@ -60,13 +60,8 @@ form{
     width: 280px;
     margin: 20px;
     border: 3px solid rgba(255, 204, 0, 0.45);
-    color:turquoise;
-    text-align: center;
-    font-size: large;
     background-color: #2f5e4e;
     border-radius: 12px;
-    cursor:pointer;
-    transition: all 0.4s;
 }
 .element:hover{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -74,7 +69,6 @@ form{
     transform: scale(1.1);
 
 }
-
 
 h3{
     color: turquoise;
