@@ -1,5 +1,6 @@
 import express, { urlencoded } from "express";
 import path from "path";
+
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
@@ -231,3 +232,4 @@ connectDB().then(()=>{
         console.log("SERVER IS RUNNING")
     })  
 })
+
