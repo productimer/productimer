@@ -71,6 +71,7 @@ text-shadow: 1px 1px 3px white;
 }
 
 #sidemenuButton{
+    z-index: 19;
     position:absolute;
     left:10px;
     width: 5%;
