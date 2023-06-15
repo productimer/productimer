@@ -186,7 +186,7 @@ app.post('/register',async(req,res)=>{
 
         })
 //    res.cookie('user',)
-   res.render("home.ejs")
+  res.redirect("/home")
 
 
 
@@ -220,12 +220,23 @@ app.post("/login",async(req,res)=>{
             expires: new Date(Date.now() + 30000000)
 // 
         })
-        res.render("home.ejs");
+        res.redirect("/home")
         return;
     }
     res.render("login.ejs",{message:"invalid password or email"})
 
 })
+
+app.post("/logout",(async(req,res)=>{
+    try {
+     
+        await res.clearCookie("token")
+    } catch (error) {
+     console.log(error);
+    }
+    res.redirect("/login")
+ 
+ }))
 
 connectDB().then(()=>{
     app.listen(4400,()=>{

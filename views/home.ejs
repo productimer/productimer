@@ -7,6 +7,41 @@
     <link rel="stylesheet" href="home.css">
 </head>
 <body>
-    <h1>this is home</h1>
+    
+
+    <div id="menu" >
+        <div class="options">
+            <ul class="optionsList">
+                <li>Home</li>
+                <li>About</li>
+                <li>App</li>
+                <li>
+                    <form action="/logout" method="post">
+
+                        <button id="logoutBtn">
+                             Logout
+                        </button>
+                    </form>
+                </li>
+
+            </ul>
+            
+
+        </div>
+    </div>
+
+    <div id="sidemenuButton" onclick="toggleMenu()" >
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <script>
+       const toggleMenu = ()=>{
+        const menu = document.getElementById("menu");
+        menu.classList.toggle('menuToggle')
+       }
+
+
+    </script>
 </body>
 </html>
