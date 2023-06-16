@@ -8,7 +8,8 @@
 body{
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    /* justify-content: space-evenly  ; */
     align-items: center;
     
     background-image: linear-gradient( 135deg, #50aa8d 40%, #2f5e4e 100%);
@@ -27,6 +28,9 @@ color:white;
 border-radius: 12px;
 animation: slideUp 1.6s ease-out  ;
 transition: box-shadow 0.6s ease-in-out;
+display: flex;
+justify-content: space-evenly;
+align-items: center;
 /* display: flex; */
 /* justify-content: center; */
 /* align-items: center; */
@@ -66,10 +70,12 @@ form{
     /* height: 20px; */
     margin-top: 40px;
     margin-right: 20px;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     cursor:pointer;
     transition: all 0.4s;
+    overflow-x: hidden;
+
     /* width: 50%; */
     /* flex-direction: column; */
 
@@ -84,7 +90,7 @@ form{
 
 .element{
     height: 40px;
-    width: 280px;
+    width: 20vw;
     margin: 20px;
     border: 3px solid rgba(255, 204, 0, 0.45);
     color:turquoise;
@@ -148,13 +154,12 @@ h3{
 }
 
 #heading{
-    position: absolute;
+   
     color: yellow;
     /* text-align: center; */
-    top: 71px;
-    left: 666px;
     font-family: 'Satisfy', cursive;
     font-size: 45px;
+    margin: 8vh 0;
 }
 
 /* img{
@@ -162,13 +167,22 @@ h3{
     width: fit-content;
 } */
 .left{
-    position: absolute;
-    top: 230px;
-    left: 470px;
+    width: 20vw;
+    margin-left: 3vw;
+}
+.left >img{
+   
     /* width: 300px
     height: 200px; */
-    height: 243px;
-    width: 256px;
+    height: 12vw;
+    width: 12vw;
     border: 3px solid black;
     border-radius: 50%;
+    
 }
+.right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
