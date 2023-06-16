@@ -15,6 +15,41 @@ body{
     background-color: #50aa8d;
     /* background-image: linear-gradient(#50aa8d, #2f5e4e); */
 }
+#seeds{
+    position: absolute;
+    /* display: flex; */
+    background-color: #FFEE58;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    right: 170px;
+    top: 20px;
+    z-index: 3;
+}
+#number{
+    z-index: 2;
+    background-color: aquamarine;
+    border-radius: 0 35% 35% 0;
+    width: 127px;
+    height: 50px;
+    position: absolute;
+    right: 66px;
+    top: 20px;
+}
+.centre{
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    height: 270px;
+    width: 270px;
+    /* height: 100px;
+    width: 100px; */
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    border-radius: 50%;
+    background-color: #FFEE58;
+}
 #menu {
 
     background-color: turquoise;
