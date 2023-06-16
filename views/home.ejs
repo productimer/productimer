@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productimer</title>
     <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="navicon.css">
 </head>
 <body>
+
+    <div id="sidemenuButton" onclick="toggleMenu()" >
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
     <div id="menu" >
         <div class="options">
             <ul class="optionsList">
@@ -28,16 +36,14 @@
         </div>
     </div>
 
-    <div id="sidemenuButton" onclick="toggleMenu()" >
-        <span></span>
-        <span></span>
-        <span></span>
-    </div>
+    
     <script>
        const toggleMenu = ()=>{
         const menu = document.getElementById("menu");
         menu.classList.toggle('menuToggle')
        }
+
+
 
 
     </script>

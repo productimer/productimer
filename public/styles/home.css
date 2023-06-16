@@ -74,9 +74,12 @@ h1 {
     transform: scale(1.1)
 }
 
-#sidemenuButton {
-    position: absolute;
-    left: 10px;
+
+#sidemenuButton{
+    z-index: 19;
+    position:absolute;
+    left:10px;
+
     width: 5%;
     height: 30px;
     display: flex;
