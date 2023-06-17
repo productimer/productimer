@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&family=Open+Sans&family=Satisfy&display=swap');
+
 h1 {
     font-family: 'Courier New', Courier, monospace;
     color: red;
@@ -8,7 +10,70 @@ h1 {
     padding: 0;
 }
 
+body{
+    /* background-image: linear-gradient( 135deg, #50aa8d 40%, #2f5e4e 100%); */
+    background-color: #50aa8d;
+    /* background-image: linear-gradient(#50aa8d, #2f5e4e); */
+}
+#seeds{
+    position: absolute;
+    /* display: flex; */
+    background-color: #FFEE58;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    right: 170px;
+    top: 20px;
+    z-index: 3;
+}
+#number{
+    z-index: 2;
+    background-color: aquamarine;
+    border-radius: 0 35% 35% 0;
+    width: 127px;
+    height: 50px;
+    position: absolute;
+    right: 66px;
+    top: 20px;
+}
+.container
+{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+#plant{
+    height: 50px;
+    width: 200px;
+    background-color: aquamarine;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: larger;
+    color: #2196F3;
+    border: 4px solid teal;
+    border-radius: 10%;
+}
+.circle{
+    height: 230px;
+    width: 230px; 
+    border-radius: 50%;
+    background-color:#FFF59D;
+    border: 12px solid #FFEB3B;
+    padding: 15px;
+}
 
+#plant h3:hover{
+    color: white;
+}
+#plant:hover{
+    transform: scale(1.1);
+}
 #menu {
 
     background-color: turquoise;
@@ -38,18 +103,19 @@ h1 {
 #menu ul li {
     text-decoration: none;
     list-style: none;
-    font-size: 5vh;
-    margin: 2rem 0;
+    font-size: 4.5vh;
+    margin: 1.5rem;
     cursor: pointer;
     transition: all 0.4s;
     text-shadow: 1px 1px 3px white;
+    
 }
 
 #logoutBtn {
-    font-size: 4vh;
+    font-size: 4.5vh;
     background-color: transparent;
     text-shadow: 1px 1px 3px white;
-
+    font-family: 'Times New Roman';
     text-align: left;
     border: none;
     margin-right: 10px;
@@ -78,8 +144,8 @@ h1 {
 #sidemenuButton{
     z-index: 19;
     position:absolute;
-    left:10px;
-
+    left:15px;
+    top: 15px;
     width: 5%;
     height: 30px;
     display: flex;
