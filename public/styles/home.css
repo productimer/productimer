@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Open+Sans&family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&family=Open+Sans&family=Satisfy&display=swap');
 
 h1 {
     font-family: 'Courier New', Courier, monospace;
@@ -36,19 +36,43 @@ body{
     right: 66px;
     top: 20px;
 }
-.centre{
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
-    height: 270px;
-    width: 270px;
-    /* height: 100px;
-    width: 100px; */
+.container
+{
     position: absolute;
-    top: 50%;
-    right: 50%;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+#plant{
+    height: 50px;
+    width: 200px;
+    background-color: aquamarine;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: larger;
+    color: #2196F3;
+    border: 4px solid teal;
+    border-radius: 10%;
+}
+.circle{
+    height: 270px;
+    width: 270px; 
     border-radius: 50%;
-    background-color: #FFEE58;
+    background-color:#FFF59D;
+    border: 12px solid #FFEB3B;
+    padding: 15px;
+}
+
+#plant h3:hover{
+    color: white;
+}
+#plant:hover{
+    transform: scale(1.1);
 }
 #menu {
 
