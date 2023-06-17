@@ -58,6 +58,12 @@ body{
     color: #2196F3;
     border: 4px solid teal;
     border-radius: 10%;
+    transition:all 0.4s;
+    cursor:pointer;
+}
+#plant h3{
+    transition:all 0.44s;
+    cursor:pointer;
 }
 .circle{
     height: 230px;
