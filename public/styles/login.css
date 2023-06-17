@@ -75,6 +75,7 @@ form{
     cursor:pointer;
     transition: all 0.4s;
     overflow-x: hidden;
+    width:27rem;
 
     /* width: 50%; */
     /* flex-direction: column; */
