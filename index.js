@@ -157,7 +157,7 @@ app.get("/home",async(req,res)=>{
         const quoteValue = await quotePromise;
       const  quoteObj = JSON.parse(quoteValue)
        
-    res.render("home.ejs",{message:quoteObj[0].quote})
+    res.render("home.ejs",{quote:quoteObj[0].quote})
 return;}
 res.render("login.ejs",{message:"please login first!"});
 })

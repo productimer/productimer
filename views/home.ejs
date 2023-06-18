@@ -40,8 +40,10 @@
        
         <button id="plant"><h3>PLANT</h3></button>
         <h2 id="homeQuote">
-            <%=message %>
+            <%=quote %>
         </h2>
+
+        <div id="notif" ></div>
 
     </div>
     <div id="menu" >
@@ -113,7 +115,7 @@ function traceEvent(e) {
 function padWithLeadingZeros(num, totalLength) {
   return String(num).padStart(totalLength, '0');
 }
-
+    const msgBox = document.getElementById('notif')
     const plantBtn = document.getElementById("plant");
     const timeDisplay = document.querySelector('.rs-tooltip-text');
     
@@ -141,15 +143,18 @@ function padWithLeadingZeros(num, totalLength) {
                 
                 durationInSeconds--;
                 $("#slider").roundSlider({
-                    value:Minutes,
+                    value:Seconds,
                     step:0.1,
-                    max:selectedDuration,
+                    max:durationInSeconds,
                     min:0
                 })
                 
                 timeDisplay.innerText = `${Minutes}:${SecondsString}`
                 if(durationInSeconds<=0){
-                    clearInterval(timer)
+                    clearInterval(timer);
+                    msgBox.innerText = `Congrats! You focussed for ${selectedDuration} minutes straight!`
+                    msgBox.classList.add("glideDown");
+
                 }
             }, 1000);
            
