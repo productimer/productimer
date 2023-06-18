@@ -265,6 +265,8 @@ return;
         else{
             // this will be executed if user kills the plant
             clearInterval(timer);
+            let potnisAudio = new Audio('potnisReverb.mp3');
+            potnisAudio.play();
             sliderContainer.style.pointerEvents = "all";
             // timeDisplay.style.paddingRight = '5px'
             // timeDisplay.style.marginLeft = '-32px'
