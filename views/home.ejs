@@ -77,11 +77,16 @@
        const toggleMenu = ()=>{
         const menu = document.getElementById("menu");
         menu.classList.toggle('menuToggle')
+        
+
+       
        }
     </script>
 
 
     <script>
+
+
 
 let selectedDuration=0;
 let isPlanted = false;
@@ -191,6 +196,9 @@ async function sendSuccessfulCompletion(sessionLength){
                 //completes the session
                 if(durationInSeconds<=0){
                     sendSuccessfulCompletion(selectedDuration)
+                    let successSound = new Audio('success.mp3');
+
+                    successSound.play();
                     if(msgBox.classList.contains("glideDown")){
                         msgBox.classList.remove("glideDown")
 
@@ -231,6 +239,9 @@ async function sendSuccessfulCompletion(sessionLength){
 
 
 });
+
+
+
 selectedDuration = 45;
 
 return;
