@@ -217,8 +217,11 @@ body{
 
 }
 .slider .rs-tooltip-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
    /* border:4px solid #FFEE58 */
-   text-align: center;
+   
    font-size: 3rem;
    color:white;
    text-shadow: 0px 0px 5px white;
@@ -249,8 +252,9 @@ body{
 }
 
 .glideDown{
-    top:-15rem;
-    color:white;
+    top:-10rem;
+    color:greenyellow;
+    font-size: 1.5rem;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -258,7 +262,7 @@ body{
     width:40%;
     height: 10%;
     background-color: black;
-    animation:comeDown 5s  ease-in-out;
+    animation:comeDown 7s  ease-in-out;
     position:absolute;
     border-radius: 12px;
     box-shadow: 1px 1px 6px black;
