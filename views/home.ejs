@@ -118,10 +118,11 @@ function padWithLeadingZeros(num, totalLength) {
     const msgBox = document.getElementById('notif')
     const plantBtn = document.getElementById("plant");
     const timeDisplay = document.querySelector('.rs-tooltip-text');
-    
+    const sliderContainer = document.querySelector('.sliderContainer')
     plantBtn.addEventListener("click",()=>{
         if(isPlanted===false){
             isPlanted=true;
+            sliderContainer.style.pointerEvents = "none";
             plantBtn.innerText="Kill Plant😔"
             plantBtn.style.color="red"
             plantBtn.style.fontWeight="bold"
@@ -161,6 +162,7 @@ function padWithLeadingZeros(num, totalLength) {
                     }
 
                     clearInterval(timer);
+                    sliderContainer.style.pointerEvents = "all";
                     msgBox.style.color="greenyellow"
                     msgBox.innerText = `Congrats! You focussed for ${selectedDuration} minutes straight!`
                     msgBox.classList.add("glideDown");
@@ -207,6 +209,7 @@ function padWithLeadingZeros(num, totalLength) {
         else{
             // this will be executed if user kills the plant
             clearInterval(timer);
+            sliderContainer.style.pointerEvents = "all";
             timeDisplay.style.paddingRight = '5px'
             // timeDisplay.style.marginLeft = '-32px'
             timeDisplay.style.border = '1px solid white'
