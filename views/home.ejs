@@ -115,10 +115,44 @@ function traceEvent(e) {
 function padWithLeadingZeros(num, totalLength) {
   return String(num).padStart(totalLength, '0');
 }
+async function sendSuccessfulCompletion(sessionLength){
+
+   await fetch("/focus",{
+        method:'POST',
+
+
+
+        body: JSON.stringify({
+        durationInMinutes:sessionLength,
+        day:new Date().getDay(),
+        month:new Date().getMonth(),
+        year:new Date().getFullYear(),
+        
+    }),
+     
+    
+    headers: {
+        "Content-type": "application/json; charset=UTF-8"
+    }
+
+    }).then(()=>{
+
+        console.log("session data sent successfully!")
+    })
+
+}
+
+
+
+
     const msgBox = document.getElementById('notif')
     const plantBtn = document.getElementById("plant");
     const timeDisplay = document.querySelector('.rs-tooltip-text');
     const sliderContainer = document.querySelector('.sliderContainer')
+
+
+
+
     plantBtn.addEventListener("click",()=>{
         if(isPlanted===false){
             isPlanted=true;
@@ -126,7 +160,7 @@ function padWithLeadingZeros(num, totalLength) {
             plantBtn.innerText="Kill Plant😔"
             plantBtn.style.color="red"
             plantBtn.style.fontWeight="bold"
-            timeDisplay.style.paddingRight = '20px'
+            // timeDisplay.style.paddingRight = '20px'
             timeDisplay.style.border = 'none'
 
             //tree is not planted, so plant it now
@@ -152,10 +186,11 @@ function padWithLeadingZeros(num, totalLength) {
                 
                 timeDisplay.innerText = `${Minutes}:${SecondsString}`
                 
-
+                //ON SESSION SUCCESSFUL COMPLETION
                 // below statement will be executed if user 
                 //completes the session
                 if(durationInSeconds<=0){
+                    sendSuccessfulCompletion(selectedDuration)
                     if(msgBox.classList.contains("glideDown")){
                         msgBox.classList.remove("glideDown")
 
@@ -173,7 +208,7 @@ function padWithLeadingZeros(num, totalLength) {
                     }, 5000);
 
                 // timeDisplay.style.paddingRight = '5px'
-                timeDisplay.style.marginLeft = '-32px'
+                // timeDisplay.style.marginLeft = '-32px'
                 timeDisplay.style.border = '1px solid white'
 
                  isPlanted=false;
@@ -196,21 +231,18 @@ function padWithLeadingZeros(num, totalLength) {
 
 
 });
-                    selectedDuration = 45;
+selectedDuration = 45;
 
-    return;
-
-
-
-                }
-            }, 1000);
+return;
+}
+}, 1000);
            
         }
         else{
             // this will be executed if user kills the plant
             clearInterval(timer);
             sliderContainer.style.pointerEvents = "all";
-            timeDisplay.style.paddingRight = '5px'
+            // timeDisplay.style.paddingRight = '5px'
             // timeDisplay.style.marginLeft = '-32px'
             timeDisplay.style.border = '1px solid white'
            

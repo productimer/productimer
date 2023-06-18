@@ -40,6 +40,8 @@ const userSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: String,
+    sessions:Array,
+    totalMinutes:Number
     
 
 })
@@ -162,6 +164,7 @@ return;}
 res.render("login.ejs",{message:"please login first!"});
 })
 
+
 app.post('/register',async(req,res)=>{
     console.log(req.body);
     const {email} = req.body
@@ -229,6 +232,35 @@ app.post("/login",async(req,res)=>{
         return;
     }
     res.render("login.ejs",{message:"invalid password or email"})
+
+})
+
+app.post('/focus',async(req,res)=>{
+  console.log(req.body);
+  if(!req.cookies.token)
+  {
+      res.render("login.ejs",{message:"please login first"})
+  }
+  const currentUserID = jwt.verify(req.cookies.token,'password') ;
+  
+  //we got the user id 
+  //now we will insert the info
+  try {
+    
+    const currentUser = await Users.updateOne({ _id: currentUserID.id }, {
+        $push: {
+            
+            sessions:new Object(req.body)
+        }
+     })
+    
+
+} catch (error) {
+    console.log(error)
+}
+res.redirect("/home")
+
+
 
 })
 
