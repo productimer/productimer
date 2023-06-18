@@ -39,6 +39,12 @@
             
        
         <button id="plant"><h3>PLANT</h3></button>
+        <h2 id="homeQuote">
+            <%=quote %>
+        </h2>
+
+        <div id="notif" ></div>
+
     </div>
     <div id="menu" >
         <div class="options">
@@ -109,7 +115,7 @@ function traceEvent(e) {
 function padWithLeadingZeros(num, totalLength) {
   return String(num).padStart(totalLength, '0');
 }
-
+    const msgBox = document.getElementById('notif')
     const plantBtn = document.getElementById("plant");
     const timeDisplay = document.querySelector('.rs-tooltip-text');
     
@@ -119,7 +125,7 @@ function padWithLeadingZeros(num, totalLength) {
             plantBtn.innerText="Kill Plant😔"
             plantBtn.style.color="red"
             plantBtn.style.fontWeight="bold"
-            timeDisplay.style.paddingRight = '70px'
+            timeDisplay.style.paddingRight = '20px'
             timeDisplay.style.border = 'none'
 
             //tree is not planted, so plant it now
@@ -137,24 +143,83 @@ function padWithLeadingZeros(num, totalLength) {
                 
                 durationInSeconds--;
                 $("#slider").roundSlider({
-                    value:Minutes,
+                    value:durationInSeconds,
                     step:0.1,
-                    max:selectedDuration,
+                    max:selectedDuration*60,
                     min:0
                 })
                 
                 timeDisplay.innerText = `${Minutes}:${SecondsString}`
+                
+
+                // below statement will be executed if user 
+                //completes the session
                 if(durationInSeconds<=0){
-                    clearInterval(timer)
+                    if(msgBox.classList.contains("glideDown")){
+                        msgBox.classList.remove("glideDown")
+
+                    }
+
+                    clearInterval(timer);
+                    msgBox.style.color="greenyellow"
+                    msgBox.innerText = `Congrats! You focussed for ${selectedDuration} minutes straight!`
+                    msgBox.classList.add("glideDown");
+                    setTimeout(() => {
+                        
+                        msgBox.classList.remove("glideDown")
+                        msgBox.innerText=""
+                    }, 5000);
+
+                // timeDisplay.style.paddingRight = '5px'
+                timeDisplay.style.marginLeft = '-32px'
+                timeDisplay.style.border = '1px solid white'
+
+                 isPlanted=false;
+                    plantBtn.innerText="Plant"
+                    plantBtn.style.color="blue"
+                     $("#slider").roundSlider({
+                      radius: 135,
+                     sliderType: "min-range",
+                     value: 45,
+                     handleSize:20,
+                    width:22,
+                    min:0,
+                     max:180,
+                     step:1,
+                     create: "traceEvent",
+                     start:"traceEvent",
+                     stop: "traceEvent",
+                     change:"traceEvent"
+   
+
+
+});
+                    selectedDuration = 45;
+
+    return;
+
+
+
                 }
             }, 1000);
            
         }
         else{
+            // this will be executed if user kills the plant
             clearInterval(timer);
             timeDisplay.style.paddingRight = '5px'
-            timeDisplay.style.marginLeft = '-32px'
+            // timeDisplay.style.marginLeft = '-32px'
             timeDisplay.style.border = '1px solid white'
+           
+            msgBox.innerText = `What man, cant even focus for ${selectedDuration} minutes!\nThoo Thoo, shame on you`
+            msgBox.classList.add("glideDown");
+            msgBox.style.color="red";
+            setTimeout(() => {
+                        
+                        msgBox.classList.remove("glideDown")
+                        msgBox.innerText=""
+                    }, 5000);
+
 
             isPlanted=false;
             plantBtn.innerText="Plant"
@@ -177,6 +242,8 @@ function padWithLeadingZeros(num, totalLength) {
 
 });
 
+selectedDuration =45;
+return;
 
 
 
