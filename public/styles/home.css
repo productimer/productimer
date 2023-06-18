@@ -14,6 +14,7 @@ body{
     /* background-image: linear-gradient( 135deg, #50aa8d 40%, #2f5e4e 100%); */
     background-color: #50aa8d;
     /* background-image: linear-gradient(#50aa8d, #2f5e4e); */
+    overflow: hidden;
 }
 #seeds{
     position: absolute;
@@ -237,7 +238,7 @@ body{
 #homeQuote{
     color:rgb(0, 0, 0);
     text-shadow: 0px 0px 3px white;
-    font-size: 1.44vw;
+    font-size: 2.5vh;
     width:50%;
     text-align: center;
     height: 10vh;
@@ -252,8 +253,7 @@ body{
 }
 
 .glideDown{
-    top:-10rem;
-    z-index: 100;
+    bottom:-10rem;
     color:greenyellow;
     font-size: 1.5rem;
     text-align: center;
@@ -272,25 +272,25 @@ body{
 @keyframes comeDown {
  0%{
     display: block;
-    top:-10rem;
+    bottom:-10rem;
 
  }
  25%{
     display: block;
 
-    top:0rem;
+    bottom:0rem;
 
  }
  50%{
     display: block;
 
-    top:0rem;
+    bottom:0rem;
 
  }
  75%{
     display: none;
 
-    top:-10rem;
+    bottom:-10rem;
 
  }
 }
