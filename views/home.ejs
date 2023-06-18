@@ -38,7 +38,7 @@
             </div>
             
        
-        <div id="plant"><h3>PLANT</h3></div>
+        <button id="plant"><h3>PLANT</h3></button>
     </div>
     <div id="menu" >
         <div class="options">
@@ -76,6 +76,8 @@
 
 
     <script>
+
+let currentDuration=0;
         $("#slider").roundSlider({
     radius: 135,
     sliderType: "min-range",
@@ -84,9 +86,50 @@
     width:22,
     min:15,
     max:180,
-    step:5
+    step:1,
+    create: "traceEvent",
+   start:"traceEvent",
+    stop: "traceEvent",
+    change:"traceEvent"
+   
+
 
 });
+
+
+function traceEvent(e) {
+   currentDuration= e.value;
+   console.log("currDur:",currentDuration)
+}
+
+    const plantBtn = document.getElementById("plant");
+    plantBtn.addEventListener("click",()=>{
+        let durationInSeconds = currentDuration*60;
+        
+      
+        const timer = setInterval(() => {
+
+        let displaySeconds = durationInSeconds%60;
+
+        let displayMinutes = Math.floor(durationInSeconds/60); 
+
+        durationInSeconds--;
+
+        console.log(displayMinutes+":"+displaySeconds);
+            if(durationInSeconds<=0){
+                clearInterval(timer)
+            }
+         }, 1000);
+       
+        
+
+        
+
+
+
+
+    })
+
     </script>
 
 
