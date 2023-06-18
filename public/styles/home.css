@@ -230,3 +230,13 @@ body{
 .showTime{
     margin-left:-55px;
 }
+
+#homeQuote{
+    text-shadow: 0px 0px 6px white;
+    font-size: 1.44vw;
+    width:50%;
+    text-align: center;
+    height: 10vh;
+   
+   
+}

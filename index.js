@@ -150,9 +150,14 @@ app.get("/login",async(req,res)=>{
 })
 
 
-app.get("/home",(req,res)=>{
+app.get("/home",async(req,res)=>{
     if(req.cookies.token){
-    res.render("home.ejs")
+        const quotePromise = getRandomQuote();
+    
+        const quoteValue = await quotePromise;
+      const  quoteObj = JSON.parse(quoteValue)
+       
+    res.render("home.ejs",{message:quoteObj[0].quote})
 return;}
 res.render("login.ejs",{message:"please login first!"});
 })
