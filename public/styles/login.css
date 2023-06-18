@@ -192,7 +192,7 @@ h3{
       background-color: lightblue;
       overflow-y: scroll;
     }
-    .loginContainer{
+    .loginContainer,.registerContainer{
         flex-direction: column;
         align-items: center;
         justify-content: center;
