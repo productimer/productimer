@@ -16,6 +16,11 @@ body{
     /* background-image: linear-gradient(#50aa8d, #2f5e4e); */
     overflow: hidden;
 }
+#seeds img{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
 #seeds{
     position: absolute;
     /* display: flex; */
@@ -26,6 +31,9 @@ body{
     right: 170px;
     top: 20px;
     z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #number{
     z-index: 2;
