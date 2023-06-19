@@ -1,14 +1,22 @@
 import express, { urlencoded } from "express";
 import path from "path";
-
+import {Server }  from 'socket.io'
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
 import mongoose from "mongoose";
 import { request } from "express";
 import fetch from 'node-fetch';
+import http from 'http'
 import bcrypt from "bcrypt"
-const app  = express();
+
+
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+
 app.use(express.static(path.join(path.resolve(), "public/styles")));
 
 
@@ -275,9 +283,28 @@ app.post("/logout",(async(req,res)=>{
  
  }))
 
-connectDB().then(()=>{
-    app.listen(4400,()=>{
-        console.log("SERVER IS RUNNING")
-    })  
-})
+
+
+
+
+
+
+ connectDB().then(async() => {
+    io.on("connection", (socket) => {
+      console.log(socket.id);
+     socket.on("planted",()=>{
+        console.log(`tree is being planted by ${socket.id}`)
+     })
+     socket.on("killed",()=>{
+        console.log(`tree was killed by ${socket.id}`)
+     })
+    
+  
+      // Handle socket events here
+    });
+  
+    server.listen(4400, () => {
+      console.log("SERVER IS RUNNING");
+    });
+  });
 
