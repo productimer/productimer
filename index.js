@@ -9,6 +9,7 @@ import { request } from "express";
 import fetch from 'node-fetch';
 import http from 'http'
 import bcrypt from "bcrypt"
+import jwtDecode from "jwt-decode";
 
 
 
@@ -193,11 +194,11 @@ app.post('/register',async(req,res)=>{
 
 //    creating cookie with encrypted object id
    const currUser = await Users.findOne({email:req.body.email})
-   console.log("currUser:",currUser)
+  //  console.log("currUser:",currUser)
    const token = jwt.sign({id:currUser.id},'password')
         // console.log("jwt token is:",token);
         res.cookie("token", token, {
-            httpOnly: true,
+            httpOnly: false,
             expires: new Date(Date.now() + 30000000)
 
         })
@@ -228,7 +229,7 @@ app.post("/login",async(req,res)=>{
 
    
     if (await bcrypt.compare(password, currUser.password)) {
-       console.log("password is correct")
+      //  console.log("password is correct")
         const token = jwt.sign({id:currUser.id},'password')
         console.log("jwt token is:",token);
         res.cookie("token", token, {
@@ -285,18 +286,50 @@ app.post("/logout",(async(req,res)=>{
 
 
 
-
+const decodeJWT = async(jwtID=0)=>{
+  if(jwtID!=0){
+    const currentUserID = await jwt.verify(jwtID,'password') ;
+    return currentUserID.id;
+  }
+ 
+}
 
 
 
  connectDB().then(async() => {
     io.on("connection", (socket) => {
       console.log(socket.id);
-     socket.on("planted",()=>{
-        console.log(`tree is being planted by ${socket.id}`)
+
+
+
+     socket.on("planted",async(jwtID=0)=>{
+      if(jwt!==0){
+        try {
+          const userID = await decodeJWT(jwtID)
+        console.log(`tree is being planted by ${userID}`)
+        } catch (error) {
+          console.log(error)
+        }
+        
+      }
      })
-     socket.on("killed",()=>{
-        console.log(`tree was killed by ${socket.id}`)
+
+
+
+     socket.on("killed",async(jwtID=0)=>{
+      if(jwt!==0){
+        
+
+          
+        try {
+          const userID = await decodeJWT(jwtID)
+          console.log(`tree was killed by ${userID}`)
+        } catch (error) {
+          console.log(error)
+        }
+        
+      }
+      
      })
     
   
