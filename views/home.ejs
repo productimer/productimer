@@ -96,6 +96,7 @@
 let selectedDuration=0;
 let isPlanted = false;
 let isFailure = false;
+let isSuccess = false;
 let timer;
 
 
@@ -168,6 +169,7 @@ async function sendSuccessfulCompletion(sessionLength){
         if(isPlanted===false){
             isPlanted=true;
             isFailure = false;
+            isSuccess = false
             sliderContainer.style.pointerEvents = "none";
             plantBtn.innerText="Kill Plant😔"
             plantBtn.style.color="red"
@@ -241,6 +243,7 @@ async function sendSuccessfulCompletion(sessionLength){
 
                  isPlanted=false;
                  isFailure = false;
+                 isSuccess = true;
                  //since it is a success it isn't a failure
                  //we only need to inform when it is a failure
                     plantBtn.innerText="Plant"
@@ -295,6 +298,7 @@ selectedDuration = 45;
 
             isPlanted=false;
             isFailure=true;
+            isSuccess = false
             plantBtn.innerText="Plant"
             plantBtn.style.color="blue"
             $("#slider").roundSlider({
@@ -352,17 +356,32 @@ const socket = io();
 
 socket.on("connect",()=>{
     console.log("connected")
-   const status =  plantBtn.addEventListener("click",()=>{
-        const treeStatus =   setInterval(() => {
+   const status =  plantBtn.addEventListener("click",async()=>{
+        const treeStatus =   setInterval(async() => {
         
+            const jwtID = await document.cookie.split("; ").find((row) => row.startsWith("token="))
+            ?.split("=")[1];
+
+
         if(isPlanted===true){
-            socket.emit("planted")
+            
+
+            console.log(jwtID)
+             socket.emit("planted",jwtID)
+             plantBtn.removeEventListener("click",status);
         }
         if(isFailure===true){
-            socket.emit("killed")
+            socket.emit("killed",jwtID)
             clearInterval(treeStatus);
             plantBtn.removeEventListener("click",status);
         }
+        if(isSuccess===true){
+            socket.emit("sessionSuccess",jwtID)
+            clearInterval(treeStatus);
+            plantBtn.removeEventListener("click",status);
+
+        }
+        
     }, 1000);
     })
   
