@@ -302,9 +302,14 @@ app.post("/logout",(async(req,res)=>{
   
       // Handle socket events here
     });
-  
-    server.listen(4400, () => {
-      console.log("SERVER IS RUNNING");
-    });
+    if(process.env.NODE_ENV){
+        server.listen(4400, () => {
+            console.log("SERVER IS RUNNING");
+          });
+    }
+    else{
+
+        server.listen("https://productimer.onrender.com")
+    }
   });
 
