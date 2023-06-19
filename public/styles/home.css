@@ -47,6 +47,11 @@ body{
     justify-content: space-evenly;
     flex-direction: column;
 }
+.blurredContainer{
+   opacity: 0.4;
+   filter:blur(4px);
+    pointer-events: none;;
+}
 #options{
     background-color: #43e97b;
     height: 40px;
@@ -91,7 +96,8 @@ body{
     transform: scale(1.1);
 }
 #menu {
-    background-color: turquoise;
+    
+    background-color: rgba(3, 255, 255);
     width: 300px;
     height: 100%;
     position: absolute;
