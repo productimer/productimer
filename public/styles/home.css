@@ -1,4 +1,324 @@
-h1{
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Montserrat:wght@500&family=Open+Sans&family=Satisfy&display=swap');
+
+h1 {
     font-family: 'Courier New', Courier, monospace;
-    color:red;
+    color: red;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    /* background-image: linear-gradient( 135deg, #50aa8d 40%, #2f5e4e 100%); */
+    background-color: #50aa8d;
+    /* background-image: linear-gradient(#50aa8d, #2f5e4e); */
+    overflow: hidden;
+}
+#seeds{
+    position: absolute;
+    /* display: flex; */
+    background-color: #FFEE58;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    right: 170px;
+    top: 20px;
+    z-index: 3;
+}
+#number{
+    z-index: 2;
+    background-color: aquamarine;
+    border-radius: 0 20% 20% 0;
+    width: 127px;
+    height: 50px;
+    position: absolute;
+    right: 66px;
+    top: 20px;
+}
+.container
+{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+.blurredContainer{
+   opacity: 0.4;
+   filter:blur(4px);
+    pointer-events: none;;
+}
+#options{
+    background-color: #43e97b;
+    height: 40px;
+    width: 100px;
+    border-radius: 20%;
+    font-size: 33px;
+    text-align: center;
+    color: blue;
+    margin-bottom: 80px;
+}
+#plant{
+    height: 50px;
+    width: 200px;
+    background-color: aquamarine;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: larger;
+    color: #2196F3;
+    border: 4px solid teal;
+    border-radius: 10%;
+    transition:all 0.4s;
+    cursor:pointer;
+    margin: 50px;
+}
+
+
+#plant h3{
+    transition:all 0.44s;
+    cursor:pointer;
+}
+#plant:active ,#plant h3:active{
+    opacity:0.7;
+    }
+
+
+#plant h3:hover{
+    color: white;
+}
+#plant:hover{
+    transform: scale(1.1);
+}
+#menu {
+    
+    background-color: rgba(3, 255, 255);
+    width: 300px;
+    height: 100%;
+    position: absolute;
+    left: -300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s;
+}
+
+.menuToggle {
+    transform: translateX(300px);
+    transition: all 0.4s;
+
+}
+
+.options {
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#menu ul li {
+    text-decoration: none;
+    list-style: none;
+    font-size: 4.5vh;
+    margin: 1.5rem;
+    cursor: pointer;
+    transition: all 0.4s;
+    text-shadow: 1px 1px 3px white;
+    
+}
+
+#logoutBtn {
+    font-size: 4.5vh;
+    background-color: transparent;
+    text-shadow: 1px 1px 3px white;
+    font-family: 'Times New Roman';
+    text-align: left;
+    border: none;
+    margin-right: 10px;
+    padding-left: 0;
+    transition: all 0.4s;
+}
+
+#logoutBtn:hover {
+    background-color: rgb(238, 55, 23);
+    padding: 10px 20px;
+    color: white;
+    border-radius: 12px;
+    ;
+    cursor: pointer
+}
+
+#menu ul li:hover {
+    color: white;
+    padding-bottom: 20px;
+    /* transform: scale(1.2); */
+    text-shadow: 1px 1px 3px black;
+    transform: scale(1.1)
+}
+
+
+#sidemenuButton{
+    z-index: 19;
+    position:absolute;
+    left:15px;
+    top: 15px;
+    width: 5%;
+    height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    cursor: pointer;
+}
+
+#sidemenuButton span {
+    width: 40%;
+    margin: 0.3px;
+    height: 3px;
+    background-color: rgb(62, 60, 60);
+
+    transition: all 0.4s;
+
+}
+
+#sidemenuButton:hover {
+    color: white;
+}
+
+.sliderContainer{
+    animation:upDown 0.7s alternate infinite ease-in-out;
+    transition: all 0.5s;
+}
+@keyframes upDown {
+    to{
+        transform: translateY(-12px);
+    }
+    
+}
+.sliderContainer:hover{
+    transform: translateY(0);
+    animation:none;
+    
+}
+
+.slider .rs-container{
+    box-shadow: 0px 10px 25px #282828a0,0px 0px 20px #424141b8;
+    border-radius: 50%;
+
+}
+
+
+/* colors inner circle */
+.slider .rs-bg-color{
+
+    background-color: #00e9366c;
+    background-image: linear-gradient(160deg, #CDDC39 0%, #2f5e4e 100%);
+    box-shadow: 
+    inset 0 -5px 15px #0000006a,
+    inset 0 5px 15px #11111183;
+}
+
+.slider .rs-handle{
+    background-image: linear-gradient( 179deg,  rgba(0,0,0,1) 9.2%, rgba(127,16,16,1) 103.9% );
+}
+.slider .rs-range-color{
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+   
+}
+.slider .rs-border{
+   /* border:4px solid #FFEE58 */
+   border:2px solid green
+
+}
+
+
+.slider .rs-tooltip-text{
+   text-align: center;
+   /* border:4px solid #FFEE58 */
+  
+width: 6rem;
+height: 4.5rem;
+
+
+   font-size: 4rem;
+   color:white;
+   text-shadow: 0px 0px 5px white;
+   border:0.3px solid white;
+   
+
+}
+.slider .rs-tooltip-text sub{
+    font-size: 2rem;
+    text-align: center;
+}
+.slider .rs-tooltip-text .active{
+  padding-right: 30px !important;
+}
+
+.showTime{
+    margin-left:-55px;
+}
+
+#homeQuote{
+    color:rgb(0, 0, 0);
+    text-shadow: 0px 0px 3px white;
+    font-size: 2.5vh;
+    width:50%;
+    text-align: center;
+    height: 10vh;
+   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+   transition: all 0.3s;
+   
+}
+#homeQuote:hover{
+    color:aqua;
+    cursor:pointer;
+    text-shadow: 1px 1px 0px black;
+}
+
+.glideDown{
+    bottom:-10rem;
+    color:greenyellow;
+    font-size: 1.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:40%;
+    height: 10%;;
+    background-color: black;
+    animation:comeDown 7s  ease-in-out;
+    position:absolute;
+    border-radius: 12px;
+    box-shadow: 1px 1px 6px black;
+}
+
+@keyframes comeDown {
+ 0%{
+    display: block;
+    bottom:-10rem;
+
+ }
+ 25%{
+    display: block;
+
+    bottom:0rem;
+
+ }
+ 50%{
+    display: block;
+
+    bottom:0rem;
+
+ }
+ 75%{
+    display: none;
+
+    bottom:-10rem;
+
+ }
 }

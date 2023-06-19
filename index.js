@@ -40,6 +40,8 @@ const userSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: String,
+    sessions:Array,
+    totalMinutes:Number
     
 
 })
@@ -150,12 +152,18 @@ app.get("/login",async(req,res)=>{
 })
 
 
-app.get("/home",(req,res)=>{
+app.get("/home",async(req,res)=>{
     if(req.cookies.token){
-    res.render("home.ejs")
+        const quotePromise = getRandomQuote();
+    
+        const quoteValue = await quotePromise;
+      const  quoteObj = JSON.parse(quoteValue)
+       
+    res.render("home.ejs",{quote:quoteObj[0].quote})
 return;}
 res.render("login.ejs",{message:"please login first!"});
 })
+
 
 app.post('/register',async(req,res)=>{
     console.log(req.body);
@@ -186,7 +194,7 @@ app.post('/register',async(req,res)=>{
 
         })
 //    res.cookie('user',)
-   res.render("home.ejs")
+  res.redirect("/home")
 
 
 
@@ -220,12 +228,52 @@ app.post("/login",async(req,res)=>{
             expires: new Date(Date.now() + 30000000)
 // 
         })
-        res.render("home.ejs");
+        res.redirect("/home")
         return;
     }
     res.render("login.ejs",{message:"invalid password or email"})
 
 })
+
+app.post('/focus',async(req,res)=>{
+  console.log(req.body);
+  if(!req.cookies.token)
+  {
+      res.render("login.ejs",{message:"please login first"})
+  }
+  const currentUserID = jwt.verify(req.cookies.token,'password') ;
+  
+  //we got the user id 
+  //now we will insert the info
+  try {
+    
+    const currentUser = await Users.updateOne({ _id: currentUserID.id }, {
+        $push: {
+            
+            sessions:new Object(req.body)
+        }
+     })
+    
+
+} catch (error) {
+    console.log(error)
+}
+res.redirect("/home")
+
+
+
+})
+
+app.post("/logout",(async(req,res)=>{
+    try {
+     
+        await res.clearCookie("token")
+    } catch (error) {
+     console.log(error);
+    }
+    res.redirect("/login")
+ 
+ }))
 
 connectDB().then(()=>{
     app.listen(4400,()=>{

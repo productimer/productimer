@@ -4,9 +4,335 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Productimer</title>
+    <link rel="stylesheet" href="slider.css">
     <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="navicon.css">
+  
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+                                    
+    <link href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css" rel="stylesheet" />
+                                        
+    <script src="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"></script>
+    
+
+  
 </head>
 <body>
-    <h1>this is home</h1>
+
+    <div id="sidemenuButton" onclick="toggleMenu()" >
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div id="seeds">
+       
+    </div>
+    <div id="number">
+
+    </div>
+    <div class="container">
+            <div id="options">
+                |
+            </div>
+            <div class="sliderContainer">
+
+                <div id="slider" class="slider"></div>
+            </div>
+            
+       
+        <button id="plant"><h3>PLANT</h3></button>
+        <h2 id="homeQuote">
+            <%=quote %>
+        </h2>
+
+        <div id="notif" ></div>
+
+    </div>
+    <div id="menu" >
+        <div class="options">
+            <ul class="optionsList">
+                <li>Forest</li>
+                <li>Timeline</li>
+                <li>Tags</li>
+                <li>Friends</li>
+                <li>Achievements</li>
+                <li>Store</li>
+                <li>About</li>
+                <li>Settings</li>
+                <li>
+                    <form action="/logout" method="post">
+
+                        <button id="logoutBtn">
+                             Logout
+                        </button>
+                    </form>
+                </li>
+
+            </ul>
+            
+
+        </div>
+    </div>
+
+    
+    <script >
+       const toggleMenu = ()=>{
+        const menu = document.getElementById("menu");
+        menu.classList.toggle('menuToggle')
+        const container = document.querySelector(".container");
+        container.classList.toggle("blurredContainer");
+        }
+    </script>
+
+
+    <script>
+
+
+
+let selectedDuration=0;
+let isPlanted = false;
+let timer;
+
+
+        $("#slider").roundSlider({
+    radius: 135,
+    sliderType: "min-range",
+    value: 45,
+    handleSize:20,
+    width:22,
+    min:0,
+    max:180,
+    step:1,
+    create: "traceEvent",
+   start:"traceEvent",
+    stop: "traceEvent",
+    change:"traceEvent"
+   
+
+
+});
+
+
+function traceEvent(e) {
+   selectedDuration= e.value;
+   console.log("currDur:",selectedDuration)
+}
+
+function padWithLeadingZeros(num, totalLength) {
+  return String(num).padStart(totalLength, '0');
+}
+async function sendSuccessfulCompletion(sessionLength){
+
+   await fetch("/focus",{
+        method:'POST',
+
+
+
+        body: JSON.stringify({
+        durationInMinutes:sessionLength,
+        day:new Date().getDay(),
+        month:new Date().getMonth(),
+        year:new Date().getFullYear(),
+        
+    }),
+     
+    
+    headers: {
+        "Content-type": "application/json; charset=UTF-8"
+    }
+
+    }).then(()=>{
+
+        console.log("session data sent successfully!")
+    })
+
+}
+
+
+
+
+    const msgBox = document.getElementById('notif')
+    const plantBtn = document.getElementById("plant");
+    const timeDisplay = document.querySelector('.rs-tooltip-text');
+    const sliderContainer = document.querySelector('.sliderContainer')
+
+
+
+
+    plantBtn.addEventListener("click",()=>{
+        if(isPlanted===false){
+            isPlanted=true;
+            sliderContainer.style.pointerEvents = "none";
+            plantBtn.innerText="Kill Plant😔"
+            plantBtn.style.color="red"
+            plantBtn.style.fontWeight="bold"
+           
+          
+            
+            
+            
+            var button = document.querySelector('.rs-tooltip-text');
+
+            button.removeAttribute('style');
+
+
+
+            //tree is not planted, so plant it now
+            let durationInSeconds = selectedDuration*60;
+            
+            
+             timer = setInterval(() => {
+                
+                let Seconds = durationInSeconds%60;
+                
+                let Minutes = Math.floor(durationInSeconds/60); 
+                let MinutesString = padWithLeadingZeros(Minutes,3) 
+
+                let SecondsString = padWithLeadingZeros(Seconds,2)
+                
+                
+                durationInSeconds--;
+                $("#slider").roundSlider({
+                    value:durationInSeconds,
+                    step:0.1,
+                    max:selectedDuration*60,
+                    min:0
+                })
+                timeDisplay.classList.add('active')
+                    timeDisplay.style.border='none'
+                    timeDisplay.innerHTML = `${MinutesString}<br><sub>${SecondsString}</sub>`
+             
+                
+             
+                
+                //ON SESSION SUCCESSFUL COMPLETION
+                // below statement will be executed if user 
+                //completes the session
+                if(durationInSeconds<=0){
+                    sendSuccessfulCompletion(selectedDuration)
+                    let successSound = new Audio('success.mp3');
+
+                    successSound.play();
+                    if(msgBox.classList.contains("glideDown")){
+                        msgBox.classList.remove("glideDown")
+
+                    }
+
+                    clearInterval(timer);
+                    sliderContainer.style.pointerEvents = "all";
+                    msgBox.style.color="greenyellow"
+                    msgBox.innerText = `Congrats! You focussed for ${selectedDuration} minutes straight!`
+                    msgBox.classList.add("glideDown");
+                    setTimeout(() => {
+                        
+                        msgBox.classList.remove("glideDown")
+                        msgBox.innerText=""
+                    }, 5000);
+
+                // timeDisplay.style.paddingRight = '5px'
+                // timeDisplay.style.marginLeft = '-32px'
+                timeDisplay.style.border = '1px solid white'
+
+                 isPlanted=false;
+                    plantBtn.innerText="Plant"
+                    plantBtn.style.color="blue"
+                     $("#slider").roundSlider({
+                      radius: 135,
+                     sliderType: "min-range",
+                     value: 45,
+                     handleSize:20,
+                    width:22,
+                    min:0,
+                     max:180,
+                     step:1,
+                     create: "traceEvent",
+                     start:"traceEvent",
+                     stop: "traceEvent",
+                     change:"traceEvent"
+   
+
+
+});
+
+
+
+selectedDuration = 45;
+
+return;
+}
+}, 1000);
+           
+        }
+        else{
+            // this will be executed if user kills the plant
+            clearInterval(timer);
+            let potnisAudio = new Audio('potnisReverb.mp3');
+            potnisAudio.play();
+            sliderContainer.style.pointerEvents = "all";
+            // timeDisplay.style.paddingRight = '5px'
+            // timeDisplay.style.marginLeft = '-32px'
+            timeDisplay.style.border = '1px solid white'
+           
+            msgBox.innerText = `What man, cant even focus for ${selectedDuration} minutes!\nThoo Thoo, shame on you`
+            msgBox.classList.add("glideDown");
+            msgBox.style.color="red";
+            setTimeout(() => {
+                        
+                        msgBox.classList.remove("glideDown")
+                        msgBox.innerText=""
+                    }, 5000);
+
+
+            isPlanted=false;
+            plantBtn.innerText="Plant"
+            plantBtn.style.color="blue"
+            $("#slider").roundSlider({
+             radius: 135,
+            sliderType: "min-range",
+            value: 45,
+            handleSize:20,
+            width:22,
+            min:0,
+            max:180,
+            step:1,
+            create: "traceEvent",
+            start:"traceEvent",
+            stop: "traceEvent",
+            change:"traceEvent"
+   
+
+
+});
+
+selectedDuration =45;
+return;
+
+
+
+        }
+        
+      
+   
+
+
+});
+        
+       
+        
+
+        
+
+
+
+
+    
+
+    </script>
+
+
+
+    
+</script>
+   
 </body>
 </html>

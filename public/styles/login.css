@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500&family=Satisfy&display=swap');
 *{
     margin:0;
     padding: 0;;
@@ -8,26 +8,38 @@
 body{
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    /* justify-content: space-evenly  ; */
     align-items: center;
-
+    
     background-image: linear-gradient( 135deg, #50aa8d 40%, #2f5e4e 100%);
-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+ 
 .loginContainer,.registerContainer{
-height: 46vh;  
+    height: 46vh;  
 width: 46vw;
 border: 7px solid rgba(255, 204, 0, 0.45);  
+box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 /* background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgb(230, 213, 129) 0%, rgba(250,196,59,1) 100.2% ); */
-/* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
 background-color: #ffeda4;
 color:white;
 border-radius: 12px;
 animation: slideUp 1.6s ease-out  ;
 transition: box-shadow 0.6s ease-in-out;
+display: flex;
+justify-content: space-evenly;
+align-items: center;
+/* display: flex; */
+/* justify-content: center; */
+/* align-items: center; */
 }
+
 .loginContainer:hover,.registerContainer:hover{
+
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;;
+
 }
 
 
@@ -35,20 +47,9 @@ transition: box-shadow 0.6s ease-in-out;
     from{
         position: relative;
         bottom:-500px;
-
-    background-image: linear-gradient( 135deg, #90F7EC 10%, #32CCBC 100%);
-font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
 }
-.loginContainer{
-height: 30vh;  
-width: 30vw;
 
-box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-background-image: linear-gradient( 135deg, #43CBFF 10%, #9708CC 100%);
-color:white;
-border-radius: 12px;
-animation: slideUp 1.5s ease-in-out ;
-}
 @keyframes slideUp {
     from{
         position: relative;
@@ -69,8 +70,13 @@ form{
     /* height: 20px; */
     margin-top: 40px;
     margin-right: 20px;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
+    cursor:pointer;
+    transition: all 0.4s;
+    overflow-x: hidden;
+    width:27rem;
+
     /* width: 50%; */
     /* flex-direction: column; */
 
@@ -85,7 +91,7 @@ form{
 
 .element{
     height: 40px;
-    width: 280px;
+    width: 20vw;
     margin: 20px;
     border: 3px solid rgba(255, 204, 0, 0.45);
     color:turquoise;
@@ -100,12 +106,8 @@ form{
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transform: translateY(200px);
     transform: scale(1.1);
-    text-shadow: 3px 0px 19px rgba(255, 255, 255, 0.6);
-    
-
 
 }
-
 h3{
     color: turquoise;
 }
@@ -151,3 +153,71 @@ h3{
     }
 
 }
+
+#heading{
+   
+    color: yellow;
+    /* text-align: center; */
+    font-family: 'Satisfy', cursive;
+    font-size: 45px;
+    margin: 8vh 0;
+}
+
+/* img{
+    height: fit-content;
+    width: fit-content;
+} */
+.left{
+    width: 20vw;
+    margin-left: 6vw;
+}
+.left >img{
+   
+    /* width: 300px
+    height: 200px; */
+    height: 12vw;
+    width: 12vw;
+    border: 3px solid black;
+    border-radius: 50%;
+    
+}
+.right{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width: 820px) {
+    body {
+      background-color: lightblue;
+      overflow-y: scroll;
+    }
+    .loginContainer,.registerContainer{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 60vh;
+        width: 60vw;
+    }
+    .element{
+        font-size: 1.2rem;
+        width:40vw
+    }
+    .right{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    .left>img{
+        height: 20vw;
+        width: 20vw;
+    }
+    .left{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0;;
+    }
+  }
