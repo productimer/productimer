@@ -16,6 +16,11 @@ body{
     /* background-image: linear-gradient(#50aa8d, #2f5e4e); */
     overflow: hidden;
 }
+#seeds img{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
 #seeds{
     position: absolute;
     /* display: flex; */
@@ -26,6 +31,9 @@ body{
     right: 170px;
     top: 20px;
     z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #number{
     z-index: 2;
@@ -61,6 +69,8 @@ body{
     text-align: center;
     color: blue;
     margin-bottom: 80px;
+    display: flex;
+    justify-content: space-evenly;
 }
 #plant{
     height: 50px;
@@ -174,6 +184,17 @@ body{
     justify-content: space-evenly;
     cursor: pointer;
 }
+.timer img{
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+}
+
+.stopwatch img{
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+}
 
 #sidemenuButton span {
     width: 40%;
@@ -215,8 +236,13 @@ body{
 /* colors inner circle */
 .slider .rs-bg-color{
 
+<<<<<<< HEAD
+    background-color: #00e9366c;
+    background: radial-gradient(circle at 1.8% 4.8%, rgb(17, 23, 58) 0%, rgb(58, 85, 148) 90%);
+=======
     background: radial-gradient(circle at 1.8% 4.8%, rgb(17, 23, 58) 0%, rgb(58, 85, 148) 90%);
     
+>>>>>>> df8ac4a05b3832895bd168d98e38bd8c6525a2a3
     box-shadow: 
     inset 0 -5px 15px #0000006a,
     inset 0 5px 15px #11111183;
