@@ -167,8 +167,16 @@ async function sendSuccessfulCompletion(sessionLength){
             plantBtn.innerText="Kill Plant😔"
             plantBtn.style.color="red"
             plantBtn.style.fontWeight="bold"
-            // timeDisplay.style.paddingRight = '20px'
-            timeDisplay.style.border = 'none'
+           
+          
+            
+            
+            
+            var button = document.querySelector('.rs-tooltip-text');
+
+            button.removeAttribute('style');
+
+
 
             //tree is not planted, so plant it now
             let durationInSeconds = selectedDuration*60;
@@ -179,6 +187,7 @@ async function sendSuccessfulCompletion(sessionLength){
                 let Seconds = durationInSeconds%60;
                 
                 let Minutes = Math.floor(durationInSeconds/60); 
+                let MinutesString = padWithLeadingZeros(Minutes,3) 
 
                 let SecondsString = padWithLeadingZeros(Seconds,2)
                 
@@ -190,8 +199,12 @@ async function sendSuccessfulCompletion(sessionLength){
                     max:selectedDuration*60,
                     min:0
                 })
+                timeDisplay.classList.add('active')
+                    timeDisplay.style.border='none'
+                    timeDisplay.innerHTML = `${MinutesString}<br><sub>${SecondsString}</sub>`
+             
                 
-                timeDisplay.innerText = `${Minutes}:${SecondsString}`
+             
                 
                 //ON SESSION SUCCESSFUL COMPLETION
                 // below statement will be executed if user 
@@ -254,6 +267,8 @@ return;
         else{
             // this will be executed if user kills the plant
             clearInterval(timer);
+            let potnisAudio = new Audio('potnisReverb.mp3');
+            potnisAudio.play();
             sliderContainer.style.pointerEvents = "all";
             // timeDisplay.style.paddingRight = '5px'
             // timeDisplay.style.marginLeft = '-32px'
