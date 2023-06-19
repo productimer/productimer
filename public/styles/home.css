@@ -236,8 +236,13 @@ body{
 /* colors inner circle */
 .slider .rs-bg-color{
 
+<<<<<<< HEAD
     background-color: #00e9366c;
     background: radial-gradient(circle at 1.8% 4.8%, rgb(17, 23, 58) 0%, rgb(58, 85, 148) 90%);
+=======
+    background: radial-gradient(circle at 1.8% 4.8%, rgb(17, 23, 58) 0%, rgb(58, 85, 148) 90%);
+    
+>>>>>>> df8ac4a05b3832895bd168d98e38bd8c6525a2a3
     box-shadow: 
     inset 0 -5px 15px #0000006a,
     inset 0 5px 15px #11111183;
@@ -247,7 +252,7 @@ body{
     background-image: linear-gradient( 179deg,  rgba(0,0,0,1) 9.2%, rgba(127,16,16,1) 103.9% );
 }
 .slider .rs-range-color{
-    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+  background: linear-gradient(96.2deg, rgb(255, 230, 112) 10.4%, rgb(255, 100, 100) 43.8%, rgb(0, 93, 219) 105.8%);
    
 }
 .slider .rs-border{
