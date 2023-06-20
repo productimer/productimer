@@ -124,7 +124,7 @@ let timer;
 
 function traceEvent(e) {
    selectedDuration= e.value;
-   console.log("currDur:",selectedDuration)
+//    console.log("currDur:",selectedDuration)
 }
 
 function padWithLeadingZeros(num, totalLength) {
@@ -172,7 +172,8 @@ async function sendSuccessfulCompletion(sessionLength){
         if(isPlanted===false){
             isPlanted=true;
             isFailure = false;
-            isSuccess = false
+            isSuccess = true;
+            
             sliderContainer.style.pointerEvents = "none";
             plantBtn.innerText="Kill Plant😔"
             plantBtn.style.color="red"
@@ -220,6 +221,10 @@ async function sendSuccessfulCompletion(sessionLength){
                 // below statement will be executed if user 
                 //completes the session
                 if(durationInSeconds<=0){
+                    isPlanted=false;
+                 isFailure = false;
+                 isSuccess = true;
+                 console.log("isSuccess set to true")
                     sendSuccessfulCompletion(selectedDuration)
                     let successSound = new Audio('success.mp3');
 
@@ -244,9 +249,7 @@ async function sendSuccessfulCompletion(sessionLength){
                 // timeDisplay.style.marginLeft = '-32px'
                 timeDisplay.style.border = '1px solid white'
 
-                 isPlanted=false;
-                 isFailure = false;
-                 isSuccess = true;
+                 
                  //since it is a success it isn't a failure
                  //we only need to inform when it is a failure
                     plantBtn.innerText="Plant"
@@ -396,23 +399,25 @@ const status =  plantBtn.addEventListener("click",async()=>{
             const jwtID = await document.cookie.split("; ").find((row) => row.startsWith("token="))
             ?.split("=")[1];
 
-
+            let status;
         if(isPlanted===true){
-            const status = {
+             status = {
                 duration:selectedDuration,
                 message:'planting',
-                code:0
+                code:0,
+                roomID:roomID
             }
 
             // console.log(jwtID)
              socket.emit("client-status",status,roomID)
              plantBtn.removeEventListener("click",status);
         }
-        if(isFailure===true){
-            const status = {
+       else  if(isFailure===true){
+             status = {
                 duration:selectedDuration,
                 message:'killed',
-                code:-1
+                code:-1,
+                roomID:roomID
             }
 
             // console.log(jwtID)
@@ -421,19 +426,7 @@ const status =  plantBtn.addEventListener("click",async()=>{
             // clearInterval(treeStatus);
             plantBtn.removeEventListener("click",status);
         }
-        if(isSuccess===true){
-            const status = {
-                duration:selectedDuration,
-                message:'success',
-                code:1
-            }
-
-            // console.log(jwtID)
-             socket.emit("client-status",status,roomID)
-            // clearInterval(treeStatus);
-            plantBtn.removeEventListener("click",status);
-
-        }
+      
         
 
         
@@ -457,18 +450,6 @@ socket.on('receive-status',(status)=>{
 
 
 
-// plantBtn.addEventListener("click",()=>{
-//     console.log("plantButton clicker")
-//     if(isPlanted===false){
-       
-//         socket.emit("planted");
-//         // the emit sends data from client to server
-//     }
-//     if(isPlanted==false && isFailure ==true){
-//         socket.emit("killedPlant")
-//     }
-
-// })
 
 </script>
 </body>

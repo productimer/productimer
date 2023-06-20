@@ -334,6 +334,7 @@ const decodeJWT = async(jwtID=0)=>{
 
 
      socket.on("joinRoom",async(roomID,jwtID,callback)=>{
+
          socket.join(roomID);
          const userID = await decodeJWT(jwtID);
 
@@ -344,7 +345,7 @@ const decodeJWT = async(jwtID=0)=>{
        //plant status, etc
             socket.on("client-status",(status,room)=>{
             
-             console.log("client room:",room,"|status:",status);
+            
              socket.to(room).emit("receive-status",status);
         
        })
