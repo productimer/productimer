@@ -337,10 +337,18 @@ const decodeJWT = async(jwtID=0)=>{
       socket.join(roomID);
       const userID = await decodeJWT(jwtID);
 
-      callback(`${userID} joined room ${roomID}`)
+      callback(`Successfully joined room ${roomID}`)
       //the arguement of callback is the message
+     
+     
+
+   
+
+
      })
     
+
+     
   
       // Handle socket events here
     });
