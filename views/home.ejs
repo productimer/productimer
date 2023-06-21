@@ -46,6 +46,7 @@
             
        
         <button id="plant"><h3>PLANT</h3></button>
+        <input type="text" name="rooom" id="name" placeholder="enter name">
         <input type="text" name="rooom" id="room" placeholder="enter room no">
         <button onclick="joinSocketRoom()">Join Room</button>
         <h2 id="homeQuote">
@@ -377,7 +378,11 @@ socket.on("connect",()=>{
             ?.split("=")[1];
 
 const room = document.getElementById('room')
+const nameElement = document.getElementById('name')
+
 const roomID = room.value;
+const name = nameElement.value;
+
 const roomDisplay = document.getElementById("roomNumber")
 console.log("trying to join",roomID);
 
@@ -407,6 +412,7 @@ const status =  plantBtn.addEventListener("click",async()=>{
             let status;
         if(isPlanted===true){
              status = {
+                name:name,
                 duration:selectedDuration,
                 message:'planting',
                 code:0,
@@ -419,6 +425,7 @@ const status =  plantBtn.addEventListener("click",async()=>{
         }
        else  if(isFailure===true){
              status = {
+                name:name,
                 duration:selectedDuration,
                 message:'killed',
                 code:-1,
@@ -455,6 +462,14 @@ socket.on('receive-status',(status)=>{
             plantBtn.style.fontWeight="bold"
            
           
+            msgBox.innerText = `Tree Planted by ${status.name}`
+            msgBox.classList.add("glideDown");
+            msgBox.style.color="green";
+            setTimeout(() => {
+                        
+                        msgBox.classList.remove("glideDown")
+                        msgBox.innerText=""
+                    }, 5000);
             
             
             
@@ -567,7 +582,7 @@ selectedDuration = 45;
             // timeDisplay.style.marginLeft = '-32px'
             timeDisplay.style.border = '1px solid white'
            
-            msgBox.innerText = `What man, cant even focus for ${selectedDuration} minutes!\nThoo Thoo, shame on you`
+            msgBox.innerText = `Tree Killed by ${status.name}`
             msgBox.classList.add("glideDown");
             msgBox.style.color="red";
             setTimeout(() => {
