@@ -370,6 +370,8 @@ socket.on("connect",()=>{
 
 })
 
+
+
  joinSocketRoom=async()=>{
     const jwtID = await document.cookie.split("; ").find((row) => row.startsWith("token="))
             ?.split("=")[1];
@@ -391,6 +393,9 @@ await socket.emit("joinRoom",roomID,jwtID,(message)=>{
                     }, 5000);
                     roomDisplay.innerText=roomID;
 });
+
+
+
 
 
 const status =  plantBtn.addEventListener("click",async()=>{
@@ -419,25 +424,196 @@ const status =  plantBtn.addEventListener("click",async()=>{
                 code:-1,
                 roomID:roomID
             }
-
+           
             // console.log(jwtID)
              socket.emit("client-status",status,roomID)
            
             // clearInterval(treeStatus);
             plantBtn.removeEventListener("click",status);
         }
-      
+       
         
 
         
     // }, 1000);
     })
 
-
-
+  
 
 socket.on('receive-status',(status)=>{
-    console.log(status);
+    if(status.roomID ==roomID){
+       
+
+        if(status.message=='planting'){
+            isPlanted=true;
+            isFailure = false;
+            selectedDuration = status.duration;
+            
+            sliderContainer.style.pointerEvents = "none";
+            plantBtn.innerText="Kill Plant😔"
+            plantBtn.style.color="red"
+            plantBtn.style.fontWeight="bold"
+           
+          
+            
+            
+            
+            var button = document.querySelector('.rs-tooltip-text');
+
+            button.removeAttribute('style');
+
+
+
+            //tree is not planted, so plant it now
+            let durationInSeconds2 = selectedDuration*60;
+            
+            
+             timer = setInterval(() => {
+                
+                 Seconds = durationInSeconds2%60;
+                
+                 Minutes = Math.floor(durationInSeconds2/60); 
+                 MinutesString = padWithLeadingZeros(Minutes,3) 
+
+                 SecondsString = padWithLeadingZeros(Seconds,2)
+                
+                console.log("duration in seconds:",durationInSeconds2)
+                durationInSeconds2--;
+                $("#slider").roundSlider({
+                    value:durationInSeconds2,
+                    step:0.1,
+                    max:selectedDuration*60,
+                    min:0
+                })
+                timeDisplay.classList.add('active')
+                    timeDisplay.style.border='none'
+                    timeDisplay.innerHTML = `${MinutesString}<br><sub>${SecondsString}</sub>`
+             
+                
+             
+                
+                //ON SESSION SUCCESSFUL COMPLETION
+                // below statement will be executed if user 
+                //completes the session
+                if(durationInSeconds2<=0){
+                    isPlanted=false;
+                 isFailure = false;
+                 isSuccess = true;
+                 console.log("isSuccess set to true")
+                    sendSuccessfulCompletion(selectedDuration)
+                    let successSound = new Audio('success.mp3');
+
+                    successSound.play();
+                    if(msgBox.classList.contains("glideDown")){
+                        msgBox.classList.remove("glideDown")
+
+                    }
+
+                    clearInterval(timer);
+                    sliderContainer.style.pointerEvents = "all";
+                    msgBox.style.color="greenyellow"
+                    msgBox.innerText = `Congrats! You focussed for ${selectedDuration} minutes straight!`
+                    msgBox.classList.add("glideDown");
+                    setTimeout(() => {
+                        
+                        msgBox.classList.remove("glideDown")
+                        msgBox.innerText=""
+                    }, 5000);
+
+                // timeDisplay.style.paddingRight = '5px'
+                // timeDisplay.style.marginLeft = '-32px'
+                timeDisplay.style.border = '1px solid white'
+
+                 
+                 //since it is a success it isn't a failure
+                 //we only need to inform when it is a failure
+                    plantBtn.innerText="Plant"
+                    plantBtn.style.color="blue"
+                     $("#slider").roundSlider({
+                      radius: 135,
+                     sliderType: "min-range",
+                     value: 45,
+                     handleSize:20,
+                    width:22,
+                    min:0,
+                     max:180,
+                     step:1,
+                     create: "traceEvent",
+                     start:"traceEvent",
+                     stop: "traceEvent",
+                     change:"traceEvent"
+   
+
+
+});
+
+
+
+selectedDuration = 45;
+
+// return;
+}
+}, 1000);
+           
+        }
+       else {
+            // this will be executed if user kills the plant
+            clearInterval(timer);
+            
+            let potnisAudio = new Audio('potnisReverb.mp3');
+            potnisAudio.play();
+            sliderContainer.style.pointerEvents = "all";
+            // timeDisplay.style.paddingRight = '5px'
+            // timeDisplay.style.marginLeft = '-32px'
+            timeDisplay.style.border = '1px solid white'
+           
+            msgBox.innerText = `What man, cant even focus for ${selectedDuration} minutes!\nThoo Thoo, shame on you`
+            msgBox.classList.add("glideDown");
+            msgBox.style.color="red";
+            setTimeout(() => {
+                        
+                        msgBox.classList.remove("glideDown")
+                        msgBox.innerText=""
+                    }, 5000);
+
+
+            isPlanted=false;
+            isFailure=true;
+            isSuccess = false
+            plantBtn.innerText="Plant"
+            plantBtn.style.color="blue"
+            $("#slider").roundSlider({
+             radius: 135,
+            sliderType: "min-range",
+            value: 45,
+            handleSize:20,
+            width:22,
+            min:0,
+            max:180,
+            step:1,
+            create: "traceEvent",
+            start:"traceEvent",
+            stop: "traceEvent",
+            change:"traceEvent"
+   
+
+
+});
+
+selectedDuration =45;
+// return;
+
+
+
+        }
+        
+
+
+
+
+
+
+    }
 })
 
 }

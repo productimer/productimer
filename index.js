@@ -345,7 +345,7 @@ const decodeJWT = async(jwtID=0)=>{
        //plant status, etc
             socket.on("client-status",(status,room)=>{
             
-            
+            console.log(status)
              socket.to(room).emit("receive-status",status);
         
        })
