@@ -331,7 +331,31 @@ const decodeJWT = async(jwtID=0)=>{
       }
       
      })
+
+
+     socket.on("joinRoom",async(roomID,jwtID,callback)=>{
+
+         socket.join(roomID);
+         const userID = await decodeJWT(jwtID);
+
+        callback(`Successfully joined room ${roomID}`)
+       //the arguement of callback is the message
+        
+       //status will be an object containing the session details like duration ,
+       //plant status, etc
+            socket.on("client-status",(status,room)=>{
+            
+            console.log(status)
+             socket.to(room).emit("receive-status",status);
+        
+       })
+     
+     })
+
     
+    
+
+     
   
       // Handle socket events here
     });
