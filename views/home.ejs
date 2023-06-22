@@ -165,10 +165,10 @@ async function sendSuccessfulCompletion(sessionLength){
     const plantBtn = document.getElementById("plant");
     const timeDisplay = document.querySelector('.rs-tooltip-text');
     const sliderContainer = document.querySelector('.sliderContainer')
+    const roomDisplay = document.getElementById('roomNumber')
 
 
-
-
+    
     plantBtn.addEventListener("click",()=>{
         if(isPlanted===false){
             isPlanted=true;
@@ -353,12 +353,13 @@ selectedDuration =45;
 
 
 
-    
-
 
 
 <!-- setting up web socket -->
 <script >
+    
+    let currentRoom = null;
+let previousRoom = null;
 
 
 const socket = io();
@@ -371,7 +372,7 @@ socket.on("connect",()=>{
 
 })
 
-
+let ownerStatus = false;
 
  joinSocketRoom=async()=>{
     const jwtID = await document.cookie.split("; ").find((row) => row.startsWith("token="))
@@ -387,9 +388,40 @@ const roomDisplay = document.getElementById("roomNumber")
 console.log("trying to join",roomID);
 
 
-await socket.emit("joinRoom",roomID,jwtID,(message)=>{
-                     msgBox.style.color="greenyellow"
-                    msgBox.innerText = `${message}`
+
+
+
+
+
+
+
+
+function leaveRoom(previousRoom,jwtID) {
+    console.log("previous room inside leaveRoom:",previousRoom)
+  if (previousRoom) {
+    // Leave the current room
+    socket.emit('leave', previousRoom,jwtID);
+    console.log(`Left room: ${previousRoom}`);
+    
+    // Update the previous room variable
+    previousRoom = currentRoom;
+    // Reset the current room variable
+   
+  } else {
+    console.log('No room to leave.');
+  }
+}
+
+async function joinRoom(roomID,jwtID){
+   
+    currentRoom = roomID;
+    const jwt = jwtID;
+
+    await socket.emit("joinRoom",roomID,jwtID,(callback)=>{
+                    console.log(callback);
+                    ownerStatus=callback.isOwner
+                    msgBox.style.color="greenyellow"
+                    msgBox.innerHTML = `${callback.message}`
                     msgBox.classList.add("glideDown");
                     setTimeout(() => {
                         
@@ -400,22 +432,21 @@ await socket.emit("joinRoom",roomID,jwtID,(message)=>{
 
                         roomDisplay.innerText=`Room:${roomID}`;
                     }
+                   
+
+
 });
+console.log(`Joined room: ${currentRoom}`);
+await  leaveRoom(previousRoom,jwtID);
+previousRoom = currentRoom;
+
+//   console.log('updated previous room to ',previousRoom);
+
+}
+
+joinRoom(roomID,jwtID);
 
 
-window.onbeforeunload = function () {
-    let failStatus = {
-                name:name,
-                duration:selectedDuration,
-                message:'killed',
-                code:-1,
-                roomID:roomID
-            }
-           
-            // console.log(jwtID)
-             socket.emit("client-status",failStatus,roomID)
-    return "Reloading or closing the tab will remove you from the room";
-};
 
 
 const status =  plantBtn.addEventListener("click",async()=>{
@@ -425,7 +456,7 @@ const status =  plantBtn.addEventListener("click",async()=>{
             ?.split("=")[1];
 
             let status;
-        if(isPlanted===true){
+        if(isPlanted===true &&ownerStatus===true ){
              status = {
                 name:name,
                 duration:selectedDuration,
@@ -465,6 +496,8 @@ const status =  plantBtn.addEventListener("click",async()=>{
 socket.on('receive-status',(status)=>{
     if(status.roomID ==roomID){
        
+
+    
 
         if(status.message=='planting'){
             isPlanted=true;
@@ -645,6 +678,7 @@ selectedDuration =45;
 
     }
 })
+
 
 }
 
