@@ -6,6 +6,7 @@ For the frontend, EJS, CSS, and JS, jQuery roundSlider are utilized to deliver a
 \
 \
 The backend employed in this project encompasses MongoDB for the database, along with Node.js and Express for the backend.
+We have used socket.io for the rooms feature so that you can create a common session with your friends from anywhere in the world!
 
 
 
