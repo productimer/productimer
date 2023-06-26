@@ -144,7 +144,11 @@ body{
     text-shadow: 1px 1px 3px white;
     
 }
-
+#menu ul li a {
+    list-style: none;
+    text-decoration: none;
+    color: inherit;
+}
 #logoutBtn {
     font-size: 4.5vh;
     background-color: transparent;
