@@ -45,6 +45,9 @@ body{
     right: 66px;
     top: 20px;
 }
+#stpwatch{
+    cursor: pointer;
+}
 .container
 {
     position: absolute;
