@@ -173,6 +173,30 @@ return;}
 res.render("login.ejs",{message:"please login first!"});
 })
 
+app.get("/stats",async(req,res)=>{
+  if(req.cookies.token){
+
+    res.render('stats.ejs')
+   
+  }
+  else{
+    res.render("login.ejs",{message:"please login first!"});
+  }
+
+})
+
+app.get("/api/stats",async(req,res)=>{
+
+  const currentUser =await jwt.verify(req.cookies.token,'password') ;
+  const userID = currentUser.id
+  const currentUserData =  await Users.findOne({ _id: currentUser.id })
+  
+  res.json(currentUserData)
+
+
+})
+
+
 
 app.post('/register',async(req,res)=>{
     console.log(req.body);
@@ -250,7 +274,7 @@ app.post('/focus',async(req,res)=>{
   {
       res.render("login.ejs",{message:"please login first"})
   }
-  const currentUserID = jwt.verify(req.cookies.token,'password') ;
+  const currentUserID =await jwt.verify(req.cookies.token,'password') ;
   
   //we got the user id 
   //now we will insert the info

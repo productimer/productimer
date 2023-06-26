@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="stats.css">
+    <title>Productimer Stats</title>
+</head>
+<body>
+    
+
+
+
+    <div id="sidemenuButton" onclick="toggleMenu()" >
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <div id="menu" >
+        <div class="options">
+            <ul class="optionsList">
+                <li><a href="">Forest</a></li>
+                <li><a href="">Timeline</a></li>
+                <li><a href="">Tags</a></li>
+                <li><a>Friends</a></li>
+                <li><a>Achievements</a></li>
+                <li><a href="/stats">Stats</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Settings</a></li>
+                <li>
+                    <form action="/logout" method="post">
+                        
+                        <button id="logoutBtn">
+                            Logout
+                        </button>
+                    </form>
+                </li>
+                
+            </ul>
+            
+            
+        </div>
+    </div>
+    
+    <div class="container">
+        
+        <div class="statsDisplay">
+            <ul>
+                <li>Total Minutes Worked:
+                    <span id="totalMins" class="value" akhi>0</span>
+                </li>
+                <li>Total Successful Sessions:
+                    <span id="totalSessions" class="value" akhi>0</span>
+                </li>
+                <li>Average Session Duration:
+                    <span id="averageDuration" class="value" akhi>0</span>
+                </li>
+                
+            </ul>
+        </div>
+        
+
+    </div>
+        
+        <script>
+            const toggleMenu = ()=>{
+                const menu = document.getElementById("menu");
+                menu.classList.toggle('menuToggle')
+                const container = document.querySelector(".container");
+                container.classList.toggle("blurredContainer");
+            }
+
+            const displayData=(totalSessions,totalMinutes,averageDuration)=>{
+                const sessions = document.getElementById("totalSessions")
+                const minutes = document.getElementById("totalMins")
+                const average = document.getElementById("averageDuration");
+                sessions.setAttribute("actualValue",totalSessions)
+                minutes.setAttribute("actualValue",totalMinutes)
+                average.setAttribute("actualValue",averageDuration)
+                
+
+                const counters = document.querySelectorAll('.value');
+                const speed = 200;
+
+                counters.forEach( counter => {
+                const animate = () => {
+                const actualValue = +counter.getAttribute('actualValue');
+                const currentValue = +counter.innerText;//+ typecasts string into number
+     
+                const time = actualValue / speed;
+                if(currentValue < actualValue) {
+                counter.innerText = Math.ceil(currentValue + time);
+                setTimeout(animate, 35);
+                }else{
+                counter.innerText = actualValue;
+                 }
+     
+   }
+   
+animate();
+});
+
+
+            }
+
+            const getData = async()=>{
+               const response =await fetch('/api/stats');
+               const data = await response.json()
+               const {sessions} = data;
+               const totalSessions = sessions.length;
+               let totalDuration = 0;
+               let averageDuration = 0 ;
+               sessions.forEach((val,index)=>{
+                totalDuration+=val.durationInMinutes
+                
+               })
+              averageDuration = Number(totalDuration/totalSessions).toFixed(2);
+              displayData(totalSessions,totalDuration,averageDuration)              
+            }
+          
+            getData();
+
+            
+        </script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+*{
+    margin:0;
+    padding:0;
+
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.statsDisplay{
+    width: 60vw;
+    height: 60vh;
+    background-color: rgb(35, 34, 34);
+    border:2px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.statsDisplay ul li{
+    list-style:none;
+    font-size: 5vh;
+    text-align: center;
+    margin:3vw 0;
+    color:white;
+}
+.statsDisplay span{
+    display: block;
+    text-align: center;
+    color:turquoise;
+    font-weight: bold;
+    font-size: 3rem;
+    text-shadow: 0px 0px 2.8px white;
+}
+
