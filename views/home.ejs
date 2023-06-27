@@ -46,9 +46,14 @@
             
        
         <button id="plant"><h3>PLANT</h3></button>
-        <input type="text" name="rooom" id="name" placeholder="enter name">
-        <input type="text" name="rooom" id="room" placeholder="enter room no">
-        <button onclick="joinSocketRoom()">Join Room</button>
+        <div id="joinRoomDisplay">
+            <h1 onclick="toggleRoomDiv()">X</h1>
+
+            <input type="text" name="rooom" id="name" placeholder="Enter your display name">
+            <input type="text" name="rooom" id="room" placeholder="Enter room id">
+            <button onclick="joinSocketRoom() ,toggleRoomDiv()">Join Room</button>
+        </div>
+        <button class="joinToggle" onclick="toggleRoomDiv()">Join New Room</button>
         <h2 id="homeQuote">
             <%=quote %>
         </h2>
@@ -89,6 +94,14 @@
         menu.classList.toggle('menuToggle')
         const container = document.querySelector(".container");
         container.classList.toggle("blurredContainer");
+        }
+        let visible = false;
+        const toggleRoomDiv=()=>{
+        console.log(visible)
+        const joinDiv = document.getElementById('joinRoomDisplay');
+        if(visible){joinDiv.style.visibility='hidden';visible=false;}else{joinDiv.style.visibility='visible';visible=true}
+        joinDiv.classList.toggle('join-room-display')
+        
         }
     </script>
 
