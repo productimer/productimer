@@ -20,7 +20,7 @@ We have used socket.io for the realtime rooms feature so that you can create a c
 -  First clone this repo
 
 ```bash
-git clone https://github.com/apoorvapendse/Medonor-O9.git
+git clone https://github.com/apoorvapendse/productimer.git
 cd productimer
 ```
 - Now install the required dependencies using npm
