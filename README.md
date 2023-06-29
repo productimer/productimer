@@ -16,12 +16,13 @@ We have used socket.io for the realtime rooms feature so that you can create a c
         2. Here you can start your session and use the timer as a regular pomodoro/ productivity timer.
 
     - ## Collaborative mode
-       1. This mode gets activated whenever you join a room with a room ID.
+       1. This mode gets activated whenever you join a room with a room ID.(any id that has not been used yet, makes you the owner for that ID)
+       2. The room ID can be any string
 
-       2. The first person who joins the room becomes its permanent ***owner***  of that room. Only one owner can exist per room.
+       3. The first person who joins the room becomes the permanent ***owner***  of that room. Only one owner can exist per room.
        
 
-        The subsequent members who join the room(**even after the owner has left**) become(s) the ***member(s)*** of that room.
+        The subsequent members who join the room(**even after the owner has left**) become the ***members*** of that room.
 
         ### Owner Abilities:
         - Start the session (plant) with desired duration of the session.
