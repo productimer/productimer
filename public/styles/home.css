@@ -213,6 +213,99 @@ body{
 
 }
 
+#joinRoomDisplay{
+    visibility: hidden;
+    position: absolute;
+    top:17vh;
+}
+#joinRoomDisplay h1{
+    padding: 10px;
+    border-radius: 20px;
+    
+    font-size: 30px;
+    cursor: pointer;
+    transition: background-color 0.6s;
+}
+#joinRoomDisplay h1:hover{
+    background-color: rgba(0, 0, 0, 0.096);
+}
+
+.join-room-display{
+    visibility: visible;
+    z-index: 100;
+    
+    background-color: aqua;
+    display: flex;
+    flex-direction: column;
+    font-size: 50px;
+    height: 65vh;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 30vw;;
+    position:absolute;
+    top:17vh;
+    border-radius: 12px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    animation:slideDown 1s ease-in-out ;
+}
+.join-room-display input{
+    padding:1vw;
+    border-radius: 12px;
+    outline:none;
+    border:none;
+    text-align: center;
+    transition: all 0.6s;
+    cursor: pointer;
+}
+
+.join-room-display button{
+    padding:1vw;
+    border-radius: 12px;
+    outline:none;
+    border:none;
+    cursor:pointer;
+    text-align: center;
+    transition: all 0.6s;
+    font-size: 20px;
+    font-weight: bold;
+
+}
+.join-room-display input:hover{
+    padding:15px 40px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+.join-room-display button:hover{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.joinToggle{
+    padding:2vh;
+    margin-bottom: 50px;
+    border-radius: 20px;
+   
+    font-size: 3vh;
+    background-color: black;
+    color:white;
+    transition: all 0.6s;
+}
+.joinToggle:hover{
+    background-color: goldenrod;
+    text-shadow: 0 0 4px rgb(228, 227, 227);
+    cursor:pointer;
+    box-shadow: rgb(38, 57, 77) 0px 10px 20px -10px;
+    transform: translateY(-10px);
+}
+@keyframes slideDown {
+    from{
+        top:0vh;
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+        top:17vh;
+    }
+    
+}
 #sidemenuButton:hover {
     color: white;
 }
