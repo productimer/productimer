@@ -1,14 +1,23 @@
 import express, { urlencoded } from "express";
 import path from "path";
-
+import {Server }  from 'socket.io'
 import cookieParser from "cookie-parser";
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
 import mongoose from "mongoose";
 import { request } from "express";
 import fetch from 'node-fetch';
+import http from 'http'
 import bcrypt from "bcrypt"
-const app  = express();
+import jwtDecode from "jwt-decode";
+
+
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+
 app.use(express.static(path.join(path.resolve(), "public/styles")));
 
 
@@ -164,6 +173,30 @@ return;}
 res.render("login.ejs",{message:"please login first!"});
 })
 
+app.get("/stats",async(req,res)=>{
+  if(req.cookies.token){
+
+    res.render('stats.ejs')
+   
+  }
+  else{
+    res.render("login.ejs",{message:"please login first!"});
+  }
+
+})
+
+app.get("/api/stats",async(req,res)=>{
+
+  const currentUser =await jwt.verify(req.cookies.token,'password') ;
+  const userID = currentUser.id
+  const currentUserData =  await Users.findOne({ _id: currentUser.id })
+  
+  res.json(currentUserData)
+
+
+})
+
+
 
 app.post('/register',async(req,res)=>{
     console.log(req.body);
@@ -185,11 +218,11 @@ app.post('/register',async(req,res)=>{
 
 //    creating cookie with encrypted object id
    const currUser = await Users.findOne({email:req.body.email})
-   console.log("currUser:",currUser)
+  //  console.log("currUser:",currUser)
    const token = jwt.sign({id:currUser.id},'password')
         // console.log("jwt token is:",token);
         res.cookie("token", token, {
-            httpOnly: true,
+            httpOnly: false,
             expires: new Date(Date.now() + 30000000)
 
         })
@@ -220,7 +253,7 @@ app.post("/login",async(req,res)=>{
 
    
     if (await bcrypt.compare(password, currUser.password)) {
-       console.log("password is correct")
+      //  console.log("password is correct")
         const token = jwt.sign({id:currUser.id},'password')
         console.log("jwt token is:",token);
         res.cookie("token", token, {
@@ -241,7 +274,7 @@ app.post('/focus',async(req,res)=>{
   {
       res.render("login.ejs",{message:"please login first"})
   }
-  const currentUserID = jwt.verify(req.cookies.token,'password') ;
+  const currentUserID =await jwt.verify(req.cookies.token,'password') ;
   
   //we got the user id 
   //now we will insert the info
@@ -275,9 +308,155 @@ app.post("/logout",(async(req,res)=>{
  
  }))
 
-connectDB().then(()=>{
-    app.listen(4400,()=>{
-        console.log("SERVER IS RUNNING")
-    })  
-})
+
+
+const decodeJWT = async(jwtID=0)=>{
+  if(jwtID!=0){
+    const currentUserID = await jwt.verify(jwtID,'password') ;
+    return currentUserID.id;
+  }
+ 
+}
+
+const rooms = {};
+
+ connectDB().then(async() => {
+    io.on("connection", (socket) => {
+      console.log(socket.id);
+
+
+
+     socket.on("planted",async(jwtID=0)=>{
+      if(jwt!==0){
+        try {
+          const userID = await decodeJWT(jwtID)
+        console.log(`tree is being planted by ${userID}`)
+        } catch (error) {
+          console.log(error)
+        }
+        
+      }
+     })
+
+
+
+     socket.on("killed",async(jwtID=0)=>{
+      if(jwt!==0){
+        
+
+          
+        try {
+          const userID = await decodeJWT(jwtID)
+          console.log(`tree was killed by ${userID}`)
+        } catch (error) {
+          console.log(error)
+        }
+        
+      }
+      
+     })
+
+    
+
+     socket.on("joinRoom",async(roomID,jwtID,callback)=>{
+      const userIDObj = await jwtDecode(jwtID);
+        const userID = userIDObj.id
+      console.log(rooms[roomID]);
+
+
+
+      if(rooms[roomID] && rooms[roomID].ownerPresent){
+        console.log('owner already exists')
+      }
+      else if(rooms[roomID] && rooms[roomID].owner == userID){
+        console.log("owner rejoined")
+        socket.join(roomID);
+        await callback(
+           {message:`Successfully rejoined room ${roomID} as owner`,
+             isOwner:true})
+             return;
+      }
+      else{
+        
+        const ownerId =userID; // Use the client's unique identifier as the owner ID
+        // Create the room
+        rooms[roomID] = {
+          owner: ownerId,
+          clients: [ownerId],
+          ownerPresent:true
+        };
+        console.log("new owner created")
+        socket.join(roomID);
+       await callback(
+          {message:`Successfully joined room ${roomID} as owner`,
+            isOwner:true})
+            return;
+      }
+  
+      
+     
+
+         
+        
+         //leave previous room
+         
+         socket.join(roomID);
+
+        callback(
+        {message:`Successfully joined room ${roomID}<br><small>*WAIT FOR THE OWNER TO START THE SESSION*</small>`,
+          isOwner:false})
+        
+       //the arguement of callback is the message
+        
+       //status will be an object containing the session details like duration ,
+       //plant status, etc
+           
+ 
+     })
+
+     socket.on("client-status",(status,room)=>{
+      const currRoom = rooms[room];
+      console.log("currentRoom:",currRoom)
+        
+
+              console.log(status)
+              socket.to(room).emit("receive-status",status);
+          
+  
+ })
+
+     socket.on('leave', async(room,jwtID) => {
+      const userIDObj = await jwtDecode(jwtID);
+      const userID = userIDObj.id
+      console.log("inside leave function")
+      console.log(room,userID);
+      console.log(rooms[room]);
+      if(rooms[room] && rooms[room].owner===userID){
+       rooms[room].ownerPresent=false;
+        console.log("OWNER LEFT THE ROOM")
+      }
+
+      socket.leave(room); // Leave the specified room
+    
+    });
+    
+    
+
+     
+  
+      // Handle socket events here
+    });
+
+
+
+    if(process.env.NODE_ENV){
+        server.listen(4400, () => {
+            console.log("SERVER IS RUNNING");
+          });
+    }
+    else{
+
+        server.listen("https://productimer.onrender.com")
+    }
+  });
 
